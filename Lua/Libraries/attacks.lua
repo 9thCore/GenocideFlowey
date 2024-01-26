@@ -1,6 +1,7 @@
 local lib = {}
 lib.anticipation = {}
 lib.attacks = {}
+lib.locket = {}
 local mask = CreateSprite("px", "BelowBullet")
 mask.ypivot = 0
 mask.Mask("stencil")
@@ -50,10 +51,81 @@ function lib.AnticipatedSlash(x, y, rot, warntime)
 	a.rotation = rot or 0
 end
 
+function lib.CreateLocket()
+	lib.locket.created = true
+	lib.locket.moving = false
+	lib.locket.hitbox = CreateProjectile("px", 0, 0)
+	lib.locket.hitbox["damage"] = 12
+	lib.locket.hitbox.MoveToAbs(320, 300)
+	lib.locket.hitbox.sprite.Scale(32, 24)
+	lib.locket.hitbox.sprite.alpha = 0
+	lib.locket.heart = CreateSprite("attack/heart")
+	lib.locket.heart.SetParent(lib.locket.hitbox)
+	lib.locket.heart.SetAnchor(0.5, 0.25)
+	lib.locket.heart.MoveTo(0, 0)
+	lib.locket.heart.alpha = 0
+	lib.locket.startx = 320
+	lib.locket.starty = 300
+	lib.locket.targetx = 320
+	lib.locket.targety = 300
+	lib.locket.startmovetime = 0
+	lib.locket.movetime = 0
+	lib.locket.holdtime = 0
+	lib.locket.supports = {}
+	for i = -6, 6 do
+		if i ~= 0 then 
+			local s = CreateSprite("attack/locket", "BelowBullet")
+			s.color = {0.75, 0.75, 0.75}
+			s["posmult"] = (math.abs(i)-1)/6
+			if i < 0 then s["xpos"] = -1
+			else s["xpos"] = 1
+			end
+			table.insert(lib.locket.supports, s)
+		end
+	end
+	lib.UpdateLocket()
+end
+
+function lib.SetLocketAlpha(alpha)
+	lib.locket.heart.alpha = alpha
+end
+
+function lib.UpdateLocket()
+	for _, support in ipairs(lib.locket.supports) do
+		support.x = easing.Lerp(lib.locket.startx, lib.locket.hitbox.absx, support["posmult"]) + support["xpos"] * 23 * (1 - support["posmult"])
+		support.y = easing.Lerp(lib.locket.starty, lib.locket.hitbox.absy, support["posmult"]) + 8
+	end
+end
+
+function lib.LaunchLocket(x, y, movetime, holdtime)
+	lib.locket.targetx = x
+	lib.locket.targety = y
+	lib.locket.startmovetime = timer
+	lib.locket.movetime = movetime or 60
+	lib.locket.holdtime = holdtime or 0
+	lib.locket.moving = true
+end
+
 function lib.Update()
 	f_parry.Update()
 	mask.Scale(Arena.currentwidth, Arena.currentheight)
 	mask.MoveTo(Arena.currentx, Arena.currenty)
+
+	if lib.locket.created and lib.locket.moving then
+		local t = timer - lib.locket.startmovetime
+		if t < lib.locket.movetime then
+			local lt = easing.Out(t / lib.locket.movetime, 2)
+			lib.locket.hitbox.MoveToAbs(easing.Lerp(lib.locket.startx, lib.locket.targetx, lt), easing.Lerp(lib.locket.starty, lib.locket.targety, lt))
+		elseif t < lib.locket.movetime + lib.locket.holdtime then
+
+		elseif t < 2 * lib.locket.movetime + lib.locket.holdtime then
+			local lt = easing.In((t - lib.locket.movetime - lib.locket.holdtime) / lib.locket.movetime, 2)
+			lib.locket.hitbox.MoveToAbs(easing.Lerp(lib.locket.targetx, lib.locket.startx, lt), easing.Lerp(lib.locket.targety, lib.locket.starty, lt))
+		else
+			lib.locket.moving = false
+		end
+		lib.UpdateLocket()
+	end
 
 	for i = #lib.anticipation, 1, -1 do
 		local a = lib.anticipation[i]
@@ -93,12 +165,19 @@ function lib.EndingWave()
 	for i = 1, #lib.anticipation do
 		lib.anticipation[i].Remove()
 	end
-	lib.anticipation = {}
+	lib.anticipation = nil
 
 	for i = 1, #lib.attacks do
 		lib.attacks[i].Remove()
 	end
-	lib.attacks = {}
+	lib.attacks = nil
+	if lib.locket.created then
+		lib.locket.heart.Remove()
+		lib.locket.hitbox.Remove()
+		for _, s in ipairs(lib.locket.supports) do
+			s.Remove()
+		end
+	end
 end
 
 function lib.OnHit(bullet)
