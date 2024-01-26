@@ -61,10 +61,10 @@ function lib.CreateLocket()
 	lib.locket.hitbox.sprite.Scale(32, 24)
 	lib.locket.hitbox.sprite.alpha = 0
 	lib.locket.heart = CreateSprite("attack/heart")
+	lib.locket.heart.color = {1, 0, 0, 0}
 	lib.locket.heart.SetParent(lib.locket.hitbox)
 	lib.locket.heart.SetAnchor(0.5, 0.25)
 	lib.locket.heart.MoveTo(0, 0)
-	lib.locket.heart.alpha = 0
 	lib.locket.startx = 320
 	lib.locket.starty = 300
 	lib.locket.targetx = 320

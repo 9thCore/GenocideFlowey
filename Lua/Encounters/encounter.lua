@@ -8,7 +8,7 @@ NewAudio.CreateChannel("slash")
 
 autolinebreak = true
 music = "relentless_killer"
-startencountertext = "[effect:none]Parry with [Z]!"
+startencountertext = "[effect:none]Parry white attacks with [Z]!"
 encountertext = startencountertext
 playerskipdocommand = true
 nextwaves = {}
@@ -16,7 +16,7 @@ wavetimer = 0
 arenasize = {155, 130}
 noscalerotationbug = true
 flee = false
-turn = 3
+turn = 0
 dead = false
 item = ""
 itemheal = 0
