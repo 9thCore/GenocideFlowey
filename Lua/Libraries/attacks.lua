@@ -77,7 +77,7 @@ function lib.CreateLocket()
 	for i = -6, 6 do
 		if i ~= 0 then 
 			local s = CreateSprite("attack/locket", "BelowBullet")
-			s.color = {0.75, 0.75, 0.75}
+			s.color = {0.75, 0.75, 0.75, 0}
 			s["posmult"] = (math.abs(i)-1)/6
 			if i < 0 then s["xpos"] = -1
 			else s["xpos"] = 1
@@ -90,6 +90,9 @@ end
 
 function lib.SetLocketAlpha(alpha)
 	lib.locket.heart.alpha = alpha
+	for _, s in ipairs(lib.locket.supports) do
+		s.alpha = alpha
+	end
 end
 
 function lib.UpdateLocket()
