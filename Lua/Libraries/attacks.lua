@@ -6,6 +6,7 @@ local mask = CreateSprite("px", "BelowBullet")
 mask.ypivot = 0
 mask.Mask("stencil")
 local timer = 0
+local invultime = -999
 local f_parry = require "f_parry"
 local easing = require "easing"
 
@@ -56,6 +57,7 @@ function lib.CreateLocket()
 	lib.locket.moving = false
 	lib.locket.hitbox = CreateProjectile("px", 0, 0)
 	lib.locket.hitbox["damage"] = 12
+	lib.locket.hitbox["unparriable"] = true
 	lib.locket.hitbox.MoveToAbs(320, 300)
 	lib.locket.hitbox.sprite.Scale(32, 24)
 	lib.locket.hitbox.sprite.alpha = 0
@@ -181,16 +183,11 @@ function lib.EndingWave()
 end
 
 function lib.OnHit(bullet)
+	if timer < invultime then return end
 	local dmg = bullet["damage"] or 4
 	if f_parry.IsParrying() then
 		f_parry.Parry(dmg / 2)
-		for i = 1, #lib.attacks do
-			if lib.attacks[i] == bullet then
-				table.remove(lib.attacks, i)
-				break
-			end
-		end
-		bullet.Remove()
+		invultime = timer + 60 * 1.7
 		return
 	end
 
