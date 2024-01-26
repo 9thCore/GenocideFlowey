@@ -204,7 +204,7 @@ function EnteringState(newstate, oldstate)
             if diff == 0 then
                 BattleDialogue{"[effect:none]You tried creating green pellets.", "[effect:none]...But you did not need any healing."}
             else
-                BattleDialogue{"[effect:none]You tried creating green pellets.", "[func:TurnHeal, " .. diff .. "][effect:none]Healed " .. diff .. " hp!"}
+                BattleDialogue{"[effect:none]You tried creating green pellets.", "[func:TurnHeal, " .. diff .. "][effect:none]Healed " .. diff .. " HP!"}
                 AddPP(-diff)
             end
         end
