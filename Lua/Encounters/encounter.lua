@@ -1,7 +1,7 @@
-intro = require "intro"
-f_attacks = require "f_attacks"
-f_anim = require "f_anim"
-f_flee = require "f_flee"
+local intro = require "intro"
+local f_attacks = require "f_attacks"
+local f_anim = require "f_anim"
+local f_flee = require "f_flee"
 
 NewAudio.CreateChannel("warning")
 NewAudio.CreateChannel("slash")
