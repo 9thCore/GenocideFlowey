@@ -187,7 +187,7 @@ function lib.OnHit(bullet)
 	local dmg = bullet["damage"] or 4
 	if f_parry.IsParrying() then
 		f_parry.Parry(dmg / 2)
-		invultime = timer + 60 * 1.7
+		invultime = timer + 60
 		return
 	end
 
