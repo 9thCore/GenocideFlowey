@@ -6,7 +6,6 @@ local mask = CreateSprite("px", "BelowBullet")
 mask.ypivot = 0
 mask.Mask("stencil")
 local timer = 0
-local invultime = -999
 local f_parry = require "f_parry"
 local easing = require "easing"
 
@@ -186,11 +185,16 @@ function lib.EndingWave()
 end
 
 function lib.OnHit(bullet)
-	if timer < invultime then return end
 	local dmg = bullet["damage"] or 4
-	if f_parry.IsParrying() then
+	if not bullet["unparriable"] and f_parry.IsParrying() then
 		f_parry.Parry(dmg / 2)
-		invultime = timer + 60
+		for i = 1, #lib.attacks do
+			if lib.attacks[i] == bullet then
+				table.remove(lib.attacks, i)
+				break
+			end
+		end
+		bullet.Remove()
 		return
 	end
 
