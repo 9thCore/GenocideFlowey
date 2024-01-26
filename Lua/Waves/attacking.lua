@@ -46,7 +46,7 @@ function SpawnVine(damage)
 	v.xpivot = 1
 	v.xscale = dir
 	v.x = (dir + 1) * 320
-	v.y = 320
+	v.y = 260 + math.random(0, 80)
 	v["dir"] = dir
 	v["timer"] = 0
 	v["damage"] = damage
