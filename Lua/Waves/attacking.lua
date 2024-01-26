@@ -13,7 +13,7 @@ hits = 0
 perfects = 0
 speed = 0
 speedincrease = 0.1
-stoptime = 0
+stoptime = -1
 alreadyhit = false
 perfected = false
 lastdir = -1
@@ -69,7 +69,7 @@ function Update()
 		eye.alpha = t2
 	end
 
-	if stoptime == 0 then
+	if stoptime == -1 then
 		if target.x > 320 then
 			speed = speed - speedincrease
 		else
