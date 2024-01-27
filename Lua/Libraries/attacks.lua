@@ -60,11 +60,10 @@ function lib.CreateLocket()
 	lib.locket.hitbox.MoveToAbs(320, 300)
 	lib.locket.hitbox.sprite.Scale(32, 24)
 	lib.locket.hitbox.sprite.alpha = 0
-	lib.locket.heart = CreateSprite("attack/heart")
+	lib.locket.heart = CreateSprite("attack/heart", "BelowBullet")
 	lib.locket.heart.color = {1, 0, 0, 0}
-	lib.locket.heart.SetParent(lib.locket.hitbox)
-	lib.locket.heart.SetAnchor(0.5, 0.25)
-	lib.locket.heart.MoveTo(0, 0)
+	lib.locket.heart.MoveToAbs(lib.locket.hitbox.absx, lib.locket.hitbox.absy - 4)
+	lib.locket.heart.SendToBottom()
 	lib.locket.startx = 320
 	lib.locket.starty = 300
 	lib.locket.targetx = 320
@@ -75,7 +74,8 @@ function lib.CreateLocket()
 	lib.locket.supports = {}
 	for i = -6, 6 do
 		if i ~= 0 then 
-			local s = CreateSprite("attack/locket", "BelowBullet")
+			local s = CreateSprite("attack/locket", "BelowPlayer")
+			s.SendToBottom()
 			s.color = {0.75, 0.75, 0.75, 0}
 			s["posmult"] = (math.abs(i)-1)/6
 			if i < 0 then s["xpos"] = -1
@@ -121,11 +121,13 @@ function lib.Update()
 		if t < lib.locket.movetime then
 			local lt = easing.Out(t / lib.locket.movetime, 2)
 			lib.locket.hitbox.MoveToAbs(easing.Lerp(lib.locket.startx, lib.locket.targetx, lt), easing.Lerp(lib.locket.starty, lib.locket.targety, lt))
+			lib.locket.heart.MoveToAbs(lib.locket.hitbox.absx, lib.locket.hitbox.absy - 4)
 		elseif t < lib.locket.movetime + lib.locket.holdtime then
 
 		elseif t < 2 * lib.locket.movetime + lib.locket.holdtime then
 			local lt = easing.In((t - lib.locket.movetime - lib.locket.holdtime) / lib.locket.movetime, 2)
 			lib.locket.hitbox.MoveToAbs(easing.Lerp(lib.locket.targetx, lib.locket.startx, lt), easing.Lerp(lib.locket.targety, lib.locket.starty, lt))
+			lib.locket.heart.MoveToAbs(lib.locket.hitbox.absx, lib.locket.hitbox.absy - 4)
 		else
 			lib.locket.moving = false
 		end
