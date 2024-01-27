@@ -2,7 +2,7 @@ attacks = require "attacks"
 f_parry = require "f_parry"
 timer = 0
 rot = 0
-Encounter["wavetimer"] = 6
+Encounter["wavetimer"] = 5.75
 
 function Update()
 	attacks.Update()

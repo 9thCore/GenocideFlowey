@@ -1,7 +1,7 @@
 attacks = require "attacks"
 f_parry = require "f_parry"
 easing = require "easing"
-Encounter["wavetimer"] = 9
+Encounter["wavetimer"] = 8.75
 timer = 0
 attacks.CreateLocket()
 
