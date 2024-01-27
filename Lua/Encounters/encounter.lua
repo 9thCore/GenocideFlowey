@@ -137,7 +137,7 @@ function TurnHeal(hp)
 end
 
 function ClampPP(pp)
-    return math.max(math.min(pp, 40), 0)
+    return math.max(math.min(math.floor(pp), 40), 0)
 end
 
 function AddPP(pp)
