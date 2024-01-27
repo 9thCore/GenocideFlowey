@@ -102,6 +102,7 @@ function lib.UpdateLocket()
 end
 
 function lib.LaunchLocket(x, y, movetime, holdtime)
+	Audio.PlaySound("rise")
 	lib.locket.targetx = x
 	lib.locket.targety = y
 	lib.locket.startmovetime = timer
