@@ -107,6 +107,7 @@ function EndTutorial()
     State("ACTIONSELECT")
     ppbar.background.x = ppbar.background.x - 300
     pp.alpha = 1
+    shakeshake = true
 end
 
 function SetDialogue(...)
@@ -161,8 +162,8 @@ function Update()
     f_flee.Update()
 
     if shakeshake then
-        Player.sprite.xpivot = 0.4375 + math.random() * 0.125
-        Player.sprite.ypivot = 0.4375 + math.random() * 0.125
+        Player.sprite.xpivot = 0.5 + math.random() * 1/16 - 1/32
+        Player.sprite.ypivot = 0.5 + math.random() * 1/16 - 1/32
     end
 
     if dead then
@@ -173,8 +174,6 @@ end
 function EnemyDialogueEnding()
     turn = turn + 1
     nextwaves = {"attack_" .. tostring(turn)}
-    local t = turn/20
-    f_anim.Transition(1 - t*t*t)
 end
 
 function DefenseEnding()
@@ -186,14 +185,6 @@ function HandleSpare()
 end
 
 function EnteringState(newstate, oldstate)
-    if newstate == "DEFENDING" then
-        shakeshake = false
-        Player.sprite.xpivot = 0.5
-        Player.sprite.ypivot = 0.5
-    elseif oldstate == "DEFENDING" then
-        shakeshake = true
-    end
-
     if newstate == "ATTACKING" then
         Attack()
     elseif newstate == "ITEMMENU" then
