@@ -18,6 +18,7 @@ noscalerotationbug = true
 flee = false
 turn = 0
 dead = false
+f_dead = false
 item = ""
 itemheal = 0
 ppval = 0
@@ -85,6 +86,7 @@ function EncounterStarting()
 end
 
 function StartWave(wave, timer)
+    State("ACTIONSELECT")
     nextwaves = {wave}
     wavetimer = timer or 4
     State("DEFENDING")
@@ -120,7 +122,7 @@ function Attack()
 end
 
 function HealTurn()
-    StartWave("heal")
+    StartWave("heal", 5)
 end
 
 function TryHeal()
@@ -169,6 +171,11 @@ function Update()
     if dead then
         StartWave("death", 99)
         dead = false
+    end
+
+    if f_dead then
+        StartWave("f_death", 99)
+        f_dead = false
     end
 end
 

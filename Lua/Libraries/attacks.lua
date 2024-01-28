@@ -188,6 +188,8 @@ function lib.EndingWave()
 end
 
 function lib.OnHit(bullet)
+	if Player.ishurting then return end
+
 	local dmg = bullet["damage"] or 4
 	if not bullet["unparriable"] and f_parry.IsParrying() then
 		f_parry.Parry(dmg / 2)
@@ -198,6 +200,12 @@ function lib.OnHit(bullet)
 			end
 		end
 		bullet.Remove()
+		return
+	end
+
+	if Player.hp - dmg <= 0 then
+		Encounter["f_dead"] = true
+		EndWave()
 		return
 	end
 
