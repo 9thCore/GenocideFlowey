@@ -173,6 +173,8 @@ function EndingWave()
 	mimics = nil
 	if not Encounter.Call("TryHeal") then
 		Player.CheckDeath()
-		State("ENEMYDIALOGUE")
+		if not Encounter["dead"] then
+			State("ENEMYDIALOGUE")
+		end
 	end
 end
