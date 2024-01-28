@@ -84,6 +84,11 @@ function lib.CreateLocket()
 			table.insert(lib.locket.supports, s)
 		end
 	end
+	lib.locket.noteinfo = nil
+	lib.locket.noteidx = 1
+	lib.locket.bpm = 0
+	lib.locket.musical = false
+	lib.locket.musicaltimer = 0
 	lib.UpdateLocket()
 end
 
@@ -111,27 +116,71 @@ function lib.LaunchLocket(x, y, movetime, holdtime)
 	lib.locket.moving = true
 end
 
+local function noteupdate(n)
+	local t = easing.InvLerp(n["movetime"], n["movetime"] + 120, timer)
+	n.MoveTo(easing.Lerp(n["ox"], n["tx"], t) + math.random() - 0.5, easing.Lerp(n["oy"], n["ty"], t) + math.random() - 0.5)
+	if n.absx + 16 < 0 or n.absx - 16 > 640 or n.absy + 16 < 0 or n.absy - 16 > 480 then
+		n["endtime"] = 0
+	end
+end
+
+function lib.Musical(bpm, noteinfo)
+	lib.locket.heart.SetAnimation({"heart2", "heart3", "heart2", "heart"}, 60/bpm, "attack")
+	lib.locket.bpm = bpm
+	lib.locket.noteinfo = noteinfo
+	lib.locket.musical = true
+end
+
 function lib.Update()
 	f_parry.Update()
 	mask.Scale(Arena.currentwidth, Arena.currentheight)
 	mask.MoveTo(Arena.currentx, Arena.currenty)
 
-	if lib.locket.created and lib.locket.moving then
-		local t = timer - lib.locket.startmovetime
-		if t < lib.locket.movetime then
-			local lt = easing.Out(t / lib.locket.movetime, 2)
-			lib.locket.hitbox.MoveToAbs(easing.Lerp(lib.locket.startx, lib.locket.targetx, lt), easing.Lerp(lib.locket.starty, lib.locket.targety, lt))
-			lib.locket.heart.MoveToAbs(lib.locket.hitbox.absx, lib.locket.hitbox.absy - 4)
-		elseif t < lib.locket.movetime + lib.locket.holdtime then
+	if lib.locket.created then
+		if lib.locket.moving then
+			local t = timer - lib.locket.startmovetime
+			if t < lib.locket.movetime then
+				local lt = easing.Out(t / lib.locket.movetime, 2)
+				lib.locket.hitbox.MoveToAbs(easing.Lerp(lib.locket.startx, lib.locket.targetx, lt), easing.Lerp(lib.locket.starty, lib.locket.targety, lt))
+				lib.locket.heart.MoveToAbs(lib.locket.hitbox.absx, lib.locket.hitbox.absy - 4)
+			elseif t < lib.locket.movetime + lib.locket.holdtime then
 
-		elseif t < 2 * lib.locket.movetime + lib.locket.holdtime then
-			local lt = easing.In((t - lib.locket.movetime - lib.locket.holdtime) / lib.locket.movetime, 2)
-			lib.locket.hitbox.MoveToAbs(easing.Lerp(lib.locket.targetx, lib.locket.startx, lt), easing.Lerp(lib.locket.targety, lib.locket.starty, lt))
-			lib.locket.heart.MoveToAbs(lib.locket.hitbox.absx, lib.locket.hitbox.absy - 4)
-		else
-			lib.locket.moving = false
+			elseif t < 2 * lib.locket.movetime + lib.locket.holdtime then
+				local lt = easing.In((t - lib.locket.movetime - lib.locket.holdtime) / lib.locket.movetime, 2)
+				lib.locket.hitbox.MoveToAbs(easing.Lerp(lib.locket.targetx, lib.locket.startx, lt), easing.Lerp(lib.locket.targety, lib.locket.starty, lt))
+				lib.locket.heart.MoveToAbs(lib.locket.hitbox.absx, lib.locket.hitbox.absy - 4)
+			else
+				lib.locket.moving = false
+			end
+			lib.UpdateLocket()
 		end
-		lib.UpdateLocket()
+		if lib.locket.musical then
+			local t = lib.locket.noteinfo[lib.locket.noteidx]
+			if t <= lib.locket.musicaltimer then
+				local n = CreateProjectile("px", 0, 0)
+				n.sprite.alpha = 0
+				n.sprite.Scale(12, 12)
+				local s = CreateSprite("empty")
+				s.SetAnimation({"note1", "note2", "note3", "note2"}, 1/4, "attack")
+				s.SetParent(n)
+				s.MoveTo(0, 0)
+				n.MoveToAbs(lib.locket.hitbox.absx, lib.locket.hitbox.absy)
+				n["ox"] = n.x; n["oy"] = n.y
+				n["tx"] = Player.x; n["ty"] = Player.y
+				n["update"] = noteupdate
+				n["damage"] = 10
+				n["movetime"] = timer
+				n["endtime"] = math.huge
+				lib.attacks[#lib.attacks+1] = n
+				lib.locket.musicaltimer = 0
+				lib.locket.noteidx = lib.locket.noteidx + 1
+				if lib.locket.noteidx > #lib.locket.noteinfo then
+					lib.locket.musical = false
+				end
+			end
+
+			lib.locket.musicaltimer = lib.locket.musicaltimer + lib.locket.bpm/3600
+		end
 	end
 
 	for i = #lib.anticipation, 1, -1 do
