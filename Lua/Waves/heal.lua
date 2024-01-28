@@ -30,6 +30,9 @@ function Update()
 		healtext.alpha = 0
 		soul.alpha = 0
 		Player.ForceAttack(1, -Encounter["itemheal"])
+	elseif timer == 240 then
+		EndingWave()
+		EndWave()
 	end
 
 	timer = timer + 1
