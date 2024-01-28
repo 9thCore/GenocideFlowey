@@ -167,7 +167,8 @@ function Update()
     end
 
     if dead then
-        State("DONE")
+        StartWave("death", 99)
+        dead = false
     end
 end
 

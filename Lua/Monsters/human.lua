@@ -77,7 +77,6 @@ function EndTutorial()
 end
 
 function OnDeath()
-    Audio.PlaySound("noise")
     Encounter["dead"] = true
 end
 
