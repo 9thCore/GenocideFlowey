@@ -14,7 +14,6 @@ end
 
 function lib.Start()
 	f_anim.h1.legs.x = 60
-	f_anim.h2.legs.x = 60
 
     UI.Hide(true)
     State("NONE")
@@ -35,7 +34,7 @@ function lib.Update()
 		if timer == 120 then
 			f_attacks.Circle(a.x, a.y + a.height, 120, 36, 2, nil, nil, "Top")
 		elseif timer == 342 then
-			Audio.PlaySound("hitsound")
+			Audio.PlaySound("hurtsound")
 		elseif timer > 342 and timer < 462 then
 			a.x = 320 + math.cos(math.floor((timer - 342) / 8) * math.pi) * 16
 		elseif timer == 462 then
@@ -51,10 +50,8 @@ function lib.Update()
 			f_attacks.Circle(a.x, a.y + a.height, 120, 36, 2, nil, nil, "Top")
 		elseif timer >= 540 and timer < 660 then
 			f_anim.h1.legs.x = lerp(60, 0, (timer - 540) / 120)
-			f_anim.h2.legs.x = lerp(60, 0, (timer - 540) / 120)
 		elseif timer == 660 then
 			f_anim.h1.legs.x = 0
-			f_anim.h2.legs.x = 0
 			lib.State(2)
 		end
 	elseif state == 2 then
