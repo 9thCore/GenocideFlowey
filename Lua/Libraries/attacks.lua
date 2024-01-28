@@ -42,6 +42,7 @@ local function slash(x, y, rot)
 	NewAudio.PlaySound("slash", "hit4")
 	s["endtime"] = timer + 30
 	s["damage"] = 15
+	s["parryvalue"] = 5
 	s["update"] = slashupdate
 	lib.attacks[#lib.attacks+1] = s
 end
@@ -169,6 +170,7 @@ function lib.Update()
 				n["tx"] = Player.x; n["ty"] = Player.y
 				n["update"] = noteupdate
 				n["damage"] = 10
+				n["parryvalue"] = 2
 				n["movetime"] = timer
 				n["endtime"] = math.huge
 				lib.attacks[#lib.attacks+1] = n
@@ -241,7 +243,7 @@ function lib.OnHit(bullet)
 
 	local dmg = bullet["damage"] or 4
 	if not bullet["unparriable"] and f_parry.IsParrying() then
-		f_parry.Parry(dmg / 2)
+		f_parry.Parry(bullet["parryvalue"] or dmg)
 		for i = 1, #lib.attacks do
 			if lib.attacks[i] == bullet then
 				table.remove(lib.attacks, i)
