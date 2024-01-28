@@ -57,12 +57,12 @@ end
 
 function lib.Start()
 	constructhuman(lib.h1, "normal", "two", "unused", "lhard", "rhard", "realknife")
-	constructhuman(lib.h2, "normal", "one", "smile", "ltrue", "rtrue", "realerknife")
+	-- constructhuman(lib.h2, "normal", "one", "smile", "ltrue", "rtrue", "realerknife")
 end
 
 function lib.Update()
 	updatehuman(lib.h1)
-	updatehuman(lib.h2)
+	-- updatehuman(lib.h2)
 end
 
 function lib.Transition(t)
