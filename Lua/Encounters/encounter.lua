@@ -5,6 +5,7 @@ f_flee = require "f_flee"
 
 NewAudio.CreateChannel("warning")
 NewAudio.CreateChannel("slash")
+NewAudio.CreateChannel("musicbox")
 
 autolinebreak = true
 music = "relentless_killer"
@@ -16,7 +17,7 @@ wavetimer = 0
 arenasize = {155, 130}
 noscalerotationbug = true
 flee = false
-turn = 6
+turn = 14
 dead = false
 f_dead = false
 item = ""

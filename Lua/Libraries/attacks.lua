@@ -92,6 +92,7 @@ function lib.CreateLocket()
 	lib.locket.musicaltimer = 0
 	lib.locket.noteposfunc = nil
 	lib.locket.noteper = 1
+	lib.locket.loop = true
 	lib.UpdateLocket()
 end
 
@@ -127,12 +128,13 @@ local function noteupdate(n)
 	end
 end
 
-function lib.Musical(bpm, noteinfo, noteposfunc, noteper)
+function lib.Musical(bpm, noteinfo, noteposfunc, noteper, loop)
 	lib.locket.heart.SetAnimation({"heart2", "heart3", "heart2", "heart"}, 60/bpm, "attack")
 	lib.locket.bpm = bpm
 	lib.locket.noteinfo = noteinfo
 	lib.locket.noteper = noteper or 1
 	lib.locket.noteposfunc = noteposfunc or function() return Player.x, Player.y end
+	lib.locket.loop = loop or false
 	lib.locket.musical = true
 end
 
@@ -183,11 +185,16 @@ function lib.Update()
 				lib.locket.musicaltimer = 0
 				lib.locket.noteidx = lib.locket.noteidx + 1
 				if lib.locket.noteidx > #lib.locket.noteinfo then
-					lib.locket.musical = false
+					if lib.locket.loop then
+						lib.locket.noteidx = 1
+						lib.locket.musicaltimer = -120/lib.locket.bpm
+					else
+						lib.locket.musical = false
+					end
 				end
 			end
 
-			lib.locket.musicaltimer = lib.locket.musicaltimer + lib.locket.bpm/3600
+			lib.locket.musicaltimer = lib.locket.musicaltimer + Time.dt*lib.locket.bpm/60
 		end
 	end
 
