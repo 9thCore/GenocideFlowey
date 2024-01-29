@@ -92,6 +92,7 @@ function lib.CreateLocket()
 	lib.locket.musicaltimer = 0
 	lib.locket.noteposfunc = nil
 	lib.locket.noteper = 1
+	lib.locket.spd = 1
 	lib.locket.loop = true
 	lib.UpdateLocket()
 end
@@ -121,7 +122,7 @@ function lib.LaunchLocket(x, y, movetime, holdtime)
 end
 
 local function noteupdate(n)
-	local t = easing.InvLerp(n["movetime"], n["movetime"] + 120, timer)
+	local t = easing.InvLerp(n["movetime"], n["movetime"] + 120, timer) * lib.locket.spd
 	n.MoveTo(easing.Lerp(n["ox"], n["tx"], t) + math.random() - 0.5, easing.Lerp(n["oy"], n["ty"], t) + math.random() - 0.5)
 	if n.absx + 16 < 0 or n.absx - 16 > 640 or n.absy + 16 < 0 or n.absy - 16 > 480 then
 		n["endtime"] = 0
@@ -136,6 +137,14 @@ function lib.Musical(bpm, noteinfo, noteposfunc, noteper, loop)
 	lib.locket.noteposfunc = noteposfunc or function() return Player.x, Player.y end
 	lib.locket.loop = loop or false
 	lib.locket.musical = true
+end
+
+function lib.MusicalBPM(bpm)
+	lib.locket.bpm = bpm
+end
+
+function lib.MusicalSpeed(spd)
+	lib.locket.spd = spd
 end
 
 function lib.Update()
