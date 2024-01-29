@@ -69,7 +69,7 @@ function Update()
 		z.yscale = z.xscale
 	else
 		if timer == 120 then
-			Encounter.Call("SetDialogue", {"..!", "[noskip][func:EndTutorial][next]"})
+			Encounter.Call("EndTutorial")
 		end
 	end
 
