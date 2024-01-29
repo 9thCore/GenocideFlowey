@@ -23,6 +23,7 @@ item = ""
 itemheal = 0
 ppval = 0
 shakeshake = false
+talked = false
 
 -- FIRST PHASE: SURVIVAL
 -- MUSIC: RELENTLESS_KILLER
@@ -179,13 +180,28 @@ function Update()
     end
 end
 
+function EnemyDialogueStarting()
+    if talked then return end
+    if turn == 8 then
+        BattleDialogue{"[effect:none]They ask why you won't die."}
+        talked = true
+    elseif turn == 12 then
+        BattleDialogue{"[effect:none]They ask [w:4][color:ff0000][lettereffect:shake]why[w:4][speed:1][lettereffect:none][color:ffffff] you won't die."}
+        talked = true
+    end
+end
+
 function EnemyDialogueEnding()
     turn = turn + 1
     nextwaves = {"attack_" .. tostring(turn)}
+    talked = false
 end
 
 function DefenseEnding()
     encountertext = RandomEncounterText()
+    if turn == 14 then
+        encountertext = "[effect:none]They seem to be preparing for something."
+    end
 end
 
 function HandleSpare()
