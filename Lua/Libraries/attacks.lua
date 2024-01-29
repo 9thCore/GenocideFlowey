@@ -91,6 +91,7 @@ function lib.CreateLocket()
 	lib.locket.musical = false
 	lib.locket.musicaltimer = 0
 	lib.locket.noteposfunc = nil
+	lib.locket.noteper = 1
 	lib.UpdateLocket()
 end
 
@@ -126,10 +127,11 @@ local function noteupdate(n)
 	end
 end
 
-function lib.Musical(bpm, noteinfo, noteposfunc)
+function lib.Musical(bpm, noteinfo, noteposfunc, noteper)
 	lib.locket.heart.SetAnimation({"heart2", "heart3", "heart2", "heart"}, 60/bpm, "attack")
 	lib.locket.bpm = bpm
 	lib.locket.noteinfo = noteinfo
+	lib.locket.noteper = noteper or 1
 	lib.locket.noteposfunc = noteposfunc or function() return Player.x, Player.y end
 	lib.locket.musical = true
 end
@@ -160,22 +162,24 @@ function lib.Update()
 		if lib.locket.musical then
 			local t = lib.locket.noteinfo[lib.locket.noteidx]
 			if t <= lib.locket.musicaltimer then
-				local n = CreateProjectile("px", 0, 0)
-				n.sprite.alpha = 0
-				n.sprite.Scale(12, 12)
-				local s = CreateSprite("empty")
-				s.SetAnimation({"note1", "note2", "note3", "note2"}, 1/4, "attack")
-				s.SetParent(n)
-				s.MoveTo(0, 0)
-				n.MoveToAbs(lib.locket.hitbox.absx, lib.locket.hitbox.absy)
-				n["ox"] = n.x; n["oy"] = n.y
-				n["tx"], n["ty"] = lib.locket.noteposfunc()
-				n["update"] = noteupdate
-				n["damage"] = 10
-				n["parryvalue"] = 2
-				n["movetime"] = timer
-				n["endtime"] = math.huge
-				lib.attacks[#lib.attacks+1] = n
+				for i = 1, lib.locket.noteper do
+					local n = CreateProjectile("px", 0, 0)
+					n.sprite.alpha = 0
+					n.sprite.Scale(12, 12)
+					local s = CreateSprite("empty")
+					s.SetAnimation({"note1", "note2", "note3", "note2"}, 1/4, "attack")
+					s.SetParent(n)
+					s.MoveTo(0, 0)
+					n.MoveToAbs(lib.locket.hitbox.absx, lib.locket.hitbox.absy)
+					n["ox"] = n.x; n["oy"] = n.y
+					n["tx"], n["ty"] = lib.locket.noteposfunc()
+					n["update"] = noteupdate
+					n["damage"] = 10
+					n["parryvalue"] = 2
+					n["movetime"] = timer
+					n["endtime"] = math.huge
+					lib.attacks[#lib.attacks+1] = n
+				end
 				lib.locket.musicaltimer = 0
 				lib.locket.noteidx = lib.locket.noteidx + 1
 				if lib.locket.noteidx > #lib.locket.noteinfo then
