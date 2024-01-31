@@ -13,7 +13,7 @@ function Update()
 		attacks.SetLocketAlpha(t, 4)
 		Audio.Volume(easing.Lerp(0.75, 0.25, t))
 	elseif timer == 90 then
-		Audio.PlaySound("box2")
+		NewAudio.PlaySound("musicbox", "box2")
 		attacks.Musical(80, {0, 1, 1, 1, 1, 1, 0.5, 1.5})
 	end
 

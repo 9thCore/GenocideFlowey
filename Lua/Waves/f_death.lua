@@ -1,5 +1,6 @@
 easing = require "easing"
 Audio.Stop()
+NewAudio.Stop("musicbox")
 NewAudio.Stop("slash")
 NewAudio.Stop("warning")
 cover = CreateSprite("black", "Top")

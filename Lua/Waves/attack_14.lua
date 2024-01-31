@@ -15,7 +15,7 @@ function Update()
 		attacks.SetLocketAlpha(t, 4)
 		Audio.Volume(easing.Lerp(0.75, 0.25, t))
 	elseif timer == 120 then
-		Audio.PlaySound("box")
+		NewAudio.PlaySound("musicbox", "box")
 		attacks.Musical(160, {0, 1, 1, 1, 1, 1, 0.5, 1.5, 2, 1, 1, 1, 1, 0.5, 1.5, 1, 1, 1, 1, 1, 1, 0.5, 1.5, 2, 1, 1, 1, 1, 0.5, 1.5}, function()
 			local dx, dy = Player.absx - attacks.locket.hitbox.absx, Player.absy - attacks.locket.hitbox.absy
 			local rot = math.atan2(dy, dx)

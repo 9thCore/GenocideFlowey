@@ -15,7 +15,7 @@ function Update()
 		Audio.Volume(easing.Lerp(0.75, 0.25, t))
 		Arena.MoveTo(320, 90 + 66 * t, true, true)
 	elseif timer == 90 then
-		Audio.PlaySound("box4")
+		NewAudio.PlaySound("musicbox", "box4")
 		attacks.Musical(80, {0, 1, 1, 1, 1, 1, 0.5, 1.5, 2, 1, 1, 1, 1, 0.5, 1.5})
 	end
 

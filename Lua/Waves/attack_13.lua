@@ -17,7 +17,7 @@ function Update()
 	elseif timer == 60 then
 		attacks.LaunchLocket(Arena.x, Arena.y + Arena.height/2 + 4, 120, math.huge)
 	elseif timer == 240 then
-		Audio.PlaySound("box")
+		NewAudio.PlaySound("musicbox", "box")
 		attacks.Musical(160, {0, 1, 1, 1, 1, 1, 0.5, 1.5, 2, 1, 1, 1, 1, 0.5, 1.5, 1, 1, 1, 1, 1, 1, 0.5, 1.5, 2, 1, 1, 1, 1, 0.5, 1.5}, function()
 			local x, y = math.cos(rot) * 80 * dir, math.sin(rot) * 80 * dir
 			rot = rot + math.rad(10)
