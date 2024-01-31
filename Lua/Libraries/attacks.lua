@@ -137,14 +137,20 @@ function lib.Musical(bpm, noteinfo, noteposfunc, noteper, loop)
 	lib.locket.noteposfunc = noteposfunc or function() return Player.x, Player.y end
 	lib.locket.loop = loop or false
 	lib.locket.musical = true
+	lib.locket.noteidx = 1
 end
 
 function lib.MusicalBPM(bpm)
 	lib.locket.bpm = bpm
+	lib.locket.heart.animationspeed = 60/bpm
 end
 
 function lib.MusicalSpeed(spd)
 	lib.locket.spd = spd
+end
+
+function lib.MusicalStop()
+	lib.locket.musical = false
 end
 
 function lib.Update()

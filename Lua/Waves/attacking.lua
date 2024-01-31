@@ -92,7 +92,7 @@ function Update()
 		if not alreadyhit and Input.Confirm == 1 then
 			local diff = math.abs(320 - target.x)
 			local t = invlerp(320, 0, diff)
-			local dmg = math.floor(t*t*t*(2+math.floor(perfects*0.5)) + 0.5)
+			local dmg = math.floor(t*t*t*(2+math.floor(perfects*0.5)) + 0.5) - Encounter["fdef"]
 
 			if diff <= 20 then
 				Audio.PlaySound("hit2")

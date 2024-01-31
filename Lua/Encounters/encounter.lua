@@ -17,7 +17,7 @@ wavetimer = 0
 arenasize = {155, 130}
 noscalerotationbug = true
 flee = false
-turn = 14
+turn = 15
 dead = false
 f_dead = false
 item = ""
@@ -25,6 +25,7 @@ itemheal = 0
 ppval = 0
 shakeshake = false
 talked = false
+fdef = 0
 
 -- FIRST PHASE: SURVIVAL
 -- MUSIC: RELENTLESS_KILLER
@@ -119,12 +120,28 @@ function SetDialogue(...)
     State("ENEMYDIALOGUE")
 end
 
+function Gasp()
+    f_anim.Gasping(true)
+end
+
 function Attack()
     StartWave("attacking", 999999)
 end
 
 function HealTurn()
     StartWave("heal", 5)
+end
+
+function SetHead(spr)
+    f_anim.h1.head.Set(spr)
+end
+
+function SetLArm(spr, a, x, y)
+    f_anim.h1.arml2.alpha = a
+    f_anim.h1.arml.alpha = 1-a
+    f_anim.h1.locket.alpha = a
+    f_anim.h1.arml2.Set(spr)
+    f_anim.h1.arml2.MoveTo(x, y)
 end
 
 function TryHeal()
@@ -192,16 +209,27 @@ function EnemyDialogueStarting()
     end
 end
 
+function NoDef()
+    fdef = -99
+end
+
 function EnemyDialogueEnding()
-    turn = turn + 1
-    nextwaves = {"attack_" .. tostring(turn)}
-    talked = false
+    if turn < 15 then
+        turn = turn + 1
+        nextwaves = {"attack_" .. tostring(turn)}
+        talked = false
+    else
+        nextwaves = {}
+        wavetimer = 0
+    end
 end
 
 function DefenseEnding()
     encountertext = RandomEncounterText()
     if turn == 14 then
         encountertext = "[effect:none]They seem to be preparing for something."
+    elseif turn == 15 then
+        encountertext = "[effect:none]They have tired themselves out."
     end
 end
 

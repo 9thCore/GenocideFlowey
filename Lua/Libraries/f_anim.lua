@@ -1,4 +1,6 @@
 local lib = {}
+local easing = require "easing"
+local gasping = false
 
 lib.h1 = {}
 lib.h2 = {}
@@ -13,7 +15,8 @@ local function constructhuman(t, l, to, h, al, ar, k)
 	t.torso.SetParent(t.legs)
 	t.torso.Scale(2, 2)
 	t.torso.x = 1
-	t.torso.y = 38
+	t.torso.y = 18
+	t.torso.SetPivot(0.5, 0)
 
 	t.head = CreateSprite("human/head/" .. h)
 	t.head.SetParent(t.torso)
@@ -45,14 +48,32 @@ local function constructhuman(t, l, to, h, al, ar, k)
 	t.locket.Scale(2, 2)
 	t.locket.y = -22
 	t.locket.x = 1
+
+	t.arml2 = CreateSprite("human/arm/" .. al)
+	t.arml2.SetParent(t.legs)
+	t.arml2.Scale(2, 2)
+	t.arml2.x = 24
+	t.arml2.y = 38
+	t.arml2.alpha = 0
 end
 
 local function updatehuman(t)
-	t.legs.yscale = math.sin(Time.time * 0.5) * 0.05 + 1.95
-	t.torso.yscale = math.cos(Time.time * 0.5) * 0.025 + 1.975
+
+	if not gasping then
+		t.legs.yscale = math.sin(Time.time * 0.5) * 0.05 + 1.95
+		t.torso.yscale = math.cos(Time.time * 0.5) * 0.025 + 1.975
+	else
+		local t2 = easing.InOut(math.sin((Time.time - math.pi/2) % math.pi), 8)
+		t.legs.yscale = 2 * easing.Lerp(0.95, 1, t2)
+		t.torso.yscale = 2 * easing.Lerp(0.95, 1, t2)
+	end
 
 	t.knife.absx = t.armr.absx - 10
 	t.knife.absy = t.armr.absy - 14
+end
+
+function lib.Gasping(g)
+	gasping = g
 end
 
 function lib.Start()
