@@ -188,7 +188,7 @@ function lib.Update()
 					n["damage"] = 10
 					n["parryvalue"] = 2
 					n["movetime"] = timer
-					n["endtime"] = math.huge
+					n["endtime"] = timer + 480
 					lib.attacks[#lib.attacks+1] = n
 				end
 				lib.locket.musicaltimer = 0
