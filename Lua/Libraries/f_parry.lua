@@ -2,6 +2,7 @@ local lib = {}
 lib.active = true
 local parrytimer = 0
 local parrycooldown = 0
+local c = 90
 local startwavecooldown = 10
 local timescaleoverride
 local fp = CreateSprite("fp")
@@ -9,6 +10,11 @@ fp.SetParent(Player.sprite)
 fp.alpha = 0
 fp.x = 0
 fp.y = 0
+local ignore = false
+
+function lib.IgnoreInput(t)
+	ignore = t
+end
 
 function lib.SetActive(active)
 	lib.active = active
@@ -19,8 +25,12 @@ function lib.SetActive(active)
 end
 
 function lib.StartParry()
+	if ignore then
+		ignore = false
+		return
+	end
 	parrytimer = 30
-	parrycooldown = 90
+	parrycooldown = c
 	fp.alpha = 1
 	Audio.PlaySound("bell")
 end
@@ -36,7 +46,7 @@ function lib.Parry(pp)
 end
 
 function lib.SetCooldown(cooldown)
-	parrycooldown = cooldown
+	c = cooldown
 end
 
 function lib.OverrideTimeScale(override)

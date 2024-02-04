@@ -1,4 +1,5 @@
 local lib = {}
+local easing = require "easing"
 lib.active = false
 lib.timer = 0
 lib.cover = nil
@@ -6,7 +7,7 @@ lib.bg = nil
 lib.fg = nil
 lib.canisters = {}
 lib.circle = {x = 320, y = 240, r = 0, rad = 80}
-local easing = require "easing"
+lib.resettime = 0
 
 function lib.Canister(x, y, color)
 	local c = CreateSprite("canister", "BarrierTop")
@@ -46,6 +47,7 @@ function lib.Start()
 	lib.fg = CreateSprite("px", "CoverBarrierTop")
 	lib.fg.Scale(640, 480)
 	lib.fg.alpha = 0
+	lib.resettime = math.floor(easing.Lerp(60, 800, turn/15))
 end
 
 function lib.Update()
@@ -85,6 +87,7 @@ function lib.Update()
 		end
 		lib.fg.alpha = (t*1.125)*(t*1.125)*(t*1.125)
 	elseif lib.timer > 480 + 5.19 * 60 then
+		SetAlMightyGlobal("genoflow_souls", true)
 		State("DONE")
 	end
 
@@ -92,6 +95,12 @@ function lib.Update()
 		for i = 1, #lib.canisters do
 			lib.canisters[i].h.y = lib.canisters[i].c.y + math.floor(math.sin(Time.time) * 2 + 1)
 		end
+	end
+
+	if lib.timer == lib.resettime then
+		Audio.PlaySound("noise")
+	elseif lib.timer == lib.resettime + 2 then
+		State("DONE")
 	end
 
 	lib.timer = lib.timer + 1

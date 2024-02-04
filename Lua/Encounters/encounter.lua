@@ -2,6 +2,7 @@ intro = require "intro"
 f_attacks = require "f_attacks"
 f_anim = require "f_anim"
 f_flee = require "f_flee"
+intro2 = require "intro2"
 
 NewAudio.CreateChannel("warning")
 NewAudio.CreateChannel("slash")
@@ -17,7 +18,7 @@ wavetimer = 0
 arenasize = {155, 130}
 noscalerotationbug = true
 flee = false
-turn = 15
+turn = 0
 dead = false
 f_dead = false
 item = ""
@@ -26,24 +27,6 @@ ppval = 0
 shakeshake = false
 talked = false
 fdef = 0
-
--- FIRST PHASE: SURVIVAL
--- MUSIC: RELENTLESS_KILLER
--- Survive to the end of the fight
--- Killing the human results in a reload
--- Human tires themselves out
--- Flee when the human is tired and collect the 6 human souls
--- Fleeing before the end gives the human enough time to reload
-
--- SECOND PHASE: JUDGEMENT
--- MUSIC: FINALE
--- Checkpoint
--- Perpetual wave, similar to the Photoshop Flowey fight
--- FIGHT button appears periodically in the Arena
--- Light damage taken from human
--- Heavy damage dealt to human
--- Killing the human results in a win, as FLOWEY has more DT
--- Post second phase, a TRUE RESET can be done by FLOWEY
 
 enemies = {
     "human"
@@ -78,7 +61,21 @@ function EncounterStarting()
     pp.MoveTo(492, UI.hplabel.absy)
     f_anim.Start()
 
-    if GetAlMightyGlobal("genoflow_skipintro") ~= true then
+    if GetAlMightyGlobal("genoflow_win") == true then
+        encountertext = "[novoice]"
+        Audio.Stop()
+        StartWave("reset", math.huge)
+        return
+    elseif GetAlMightyGlobal("genoflow_souls") == true then
+        Audio.Pause()
+        shakeshake = false
+        if GetAlMightyGlobal("genoflow_soulsintroskip") ~= true then
+            intro2.Start()
+        else
+            encountertext = "[novoice]"
+            StartWave("omega", math.huge)
+        end
+    elseif GetAlMightyGlobal("genoflow_skipintro") ~= true then
         Audio.Pause()
         intro.Start()
         pp.alpha = 0
@@ -103,6 +100,11 @@ function SetIntroSkip()
     SetAlMightyGlobal("genoflow_skipintro", true)
 end
 
+function MovePP(x, y)
+    ppbar.background.MoveTo(510 + x, UI.hpbar.background.absy + y)
+    pp.MoveTo(492 + x, UI.hplabel.absy + y)
+end
+
 function EndTutorial()
     SetIntroSkip()
     UI.Hide(false)
@@ -113,6 +115,10 @@ function EndTutorial()
     ppbar.background.x = ppbar.background.x - 300
     pp.alpha = 1
     shakeshake = true
+end
+
+function IsDead()
+    return enemies[1]["hp"] < 1
 end
 
 function SetDialogue(...)
@@ -144,10 +150,18 @@ function SetLArm(spr, a, x, y)
     f_anim.h1.arml2.MoveTo(x, y)
 end
 
+function FHeal()
+    local i = enemies[1].Call("Heal")
+    if i ~= nil then
+        local c = enemies[1].Call("GetHeal", i)
+        return i, c
+    end
+    return nil, nil
+end
+
 function TryHeal()
-    item = enemies[1].Call("Heal")
+    item, itemheal = FHeal()
     if item ~= nil then
-        itemheal = enemies[1].Call("GetHeal", item)
         HealTurn()
         return true
     end
@@ -181,6 +195,7 @@ function Update()
     f_attacks.Update()
     f_anim.Update()
     f_flee.Update()
+    intro2.Update()
 
     if shakeshake then
         Player.sprite.xpivot = 0.5 + math.random() * 1/16 - 1/32
@@ -200,17 +215,26 @@ end
 
 function EnemyDialogueStarting()
     if talked then return end
-    if turn == 8 then
-        BattleDialogue{"[effect:none]They ask why you won't die."}
+    if turn == 8 and not GetAlMightyGlobal("genoflow_talked1") then
+        BattleDialogue{"[novoice][effect:none]\"Why won't you die already?\""}
         talked = true
-    elseif turn == 12 then
-        BattleDialogue{"[effect:none]They ask [w:4][color:ff0000][lettereffect:shake]why[w:4][speed:1][lettereffect:none][color:ffffff] you won't die."}
+        SetAlMightyGlobal("genoflow_talked1", true)
+    elseif turn == 12 and not GetAlMightyGlobal("genoflow_talked2") then
+        BattleDialogue{"[novoice][effect:none]\"[color:ff0000][lettereffect:shake]Why[w:4][lettereffect:none][color:ffffff] won't you die already?\""}
         talked = true
+        SetAlMightyGlobal("genoflow_talked2", true)
     end
 end
 
 function NoDef()
     fdef = -99
+end
+
+function StartSoulFight()
+    SetAlMightyGlobal("genoflow_soulsintroskip", true)
+    Player.sprite.alpha = 1
+    intro2.End()
+    StartWave("omega", math.huge)
 end
 
 function EnemyDialogueEnding()
@@ -227,9 +251,9 @@ end
 function DefenseEnding()
     encountertext = RandomEncounterText()
     if turn == 14 then
-        encountertext = "[effect:none]They seem to be preparing for something."
+        encountertext = "[effect:shake][voice:v_flowey]CHARA seems to be preparing for something..?"
     elseif turn == 15 then
-        encountertext = "[effect:none]They have tired themselves out."
+        encountertext = "[effect:shake, 0.5][voice:v_flowey]Now's my chance."
     end
 end
 
@@ -254,6 +278,6 @@ function EnteringState(newstate, oldstate)
         end
     elseif newstate == "MERCYMENU" then
         f_flee.Start()
-        BattleDialogue{"[noskip][effect:none][sound:runaway]You escaped...[w:30][next]"}
+        BattleDialogue{"[noskip][effect:none][sound:runaway]Escaped...[w:30][next]"}
     end
 end

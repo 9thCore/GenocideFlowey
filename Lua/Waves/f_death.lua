@@ -1,3 +1,4 @@
+if GetAlMightyGlobal("genoflow_souls") == true then State("DONE") return end
 easing = require "easing"
 Audio.Stop()
 NewAudio.Stop("musicbox")

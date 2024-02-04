@@ -122,7 +122,8 @@ function lib.LaunchLocket(x, y, movetime, holdtime)
 end
 
 local function noteupdate(n)
-	local t = easing.InvLerp(n["movetime"], n["movetime"] + 120, timer) * lib.locket.spd
+	n["movetime"] = n["movetime"] + lib.locket.spd
+	local t = easing.InvLerp(0, 120, n["movetime"])
 	n.MoveTo(easing.Lerp(n["ox"], n["tx"], t) + math.random() - 0.5, easing.Lerp(n["oy"], n["ty"], t) + math.random() - 0.5)
 	if n.absx + 16 < 0 or n.absx - 16 > 640 or n.absy + 16 < 0 or n.absy - 16 > 480 then
 		n["endtime"] = 0
@@ -147,6 +148,11 @@ end
 
 function lib.MusicalSpeed(spd)
 	lib.locket.spd = spd
+end
+
+function lib.MusicalFunc(func, notes)
+	lib.locket.noteposfunc = func or function() return Player.x, Player.y end
+	lib.locket.noteper = notes or 1
 end
 
 function lib.MusicalStop()
@@ -189,11 +195,11 @@ function lib.Update()
 					s.MoveTo(0, 0)
 					n.MoveToAbs(lib.locket.hitbox.absx, lib.locket.hitbox.absy)
 					n["ox"] = n.x; n["oy"] = n.y
-					n["tx"], n["ty"] = lib.locket.noteposfunc()
+					n["tx"], n["ty"] = lib.locket.noteposfunc(n.x, n.y)
 					n["update"] = noteupdate
 					n["damage"] = 10
 					n["parryvalue"] = 2
-					n["movetime"] = timer
+					n["movetime"] = 0
 					n["endtime"] = timer + 480
 					lib.attacks[#lib.attacks+1] = n
 				end

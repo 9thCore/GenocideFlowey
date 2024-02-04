@@ -62,6 +62,7 @@ local function shatterheart(h)
 		local s = CreateSprite("empty", h.layer)
 		s.SetAnimation({"heartshard_0", "heartshard_1", "heartshard_2", "heartshard_3"}, 1/5, "UI/Battle")
 		s["behaviour"] = heartshard
+		s.color = h.color
 		local angle = math.random() * pi2
 		s["xspd"] = math.cos(angle) * 100
 		s["yspd"] = math.sin(angle) * 100
