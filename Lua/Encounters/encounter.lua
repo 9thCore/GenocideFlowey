@@ -278,6 +278,6 @@ function EnteringState(newstate, oldstate)
         end
     elseif newstate == "MERCYMENU" then
         f_flee.Start()
-        BattleDialogue{"[noskip][effect:none][sound:runaway]Escaped...[w:30][next]"}
+        BattleDialogue{"[noskip][effect:none][sound:runaway]Escaped...[w:30][nextthisnow]"}
     end
 end

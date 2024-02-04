@@ -25,7 +25,7 @@ function lib.Update()
 			"[voice:v_floweymad][waitall:2][effect:shake]Hee hee hee...",
 			"[voice:v_floweymad][waitall:2][effect:shake]Let's see the \"power of friendship\"...",
 			"[voice:v_floweymad][waitall:2][effect:shake]Save you THIS time!",
-			"[novoice][func:StartSoulFight][next]"
+			"[novoice][func:StartSoulFight][nextthisnow]"
 		}, {0, 140}, 240, "Top", 100)
 		lib.text.SetSpeechThingPositionAndSide("down", "50%")
 		lib.text.x = 200

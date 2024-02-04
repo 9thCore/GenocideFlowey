@@ -1,6 +1,6 @@
 comments = {"[voice:v_flowey][effect:shake]..."}
 commands = {"Check", "Plead"}
-randomdialogue = {"[next]"}
+randomdialogue = {"[nextthisnow]"}
 
 sprite = "enemy"
 name = "CHARA"

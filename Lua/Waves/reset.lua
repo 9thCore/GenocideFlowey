@@ -35,7 +35,7 @@ function Buildup()
 end
 function Update()
 	if timer == 240 then
-		gameover.SetText{"The fight\n[w:4]has ended.[w:40][next]", "You have[w:4]\nbecome god.[w:40][next]", "Next time...[w:40][next]", "The same[w:4]\nmight occur.[w:40][next]", "They may[w:4]\nattack again.[w:40][next]", "You will[w:4]\nnot remember.[w:40][next]", "And neither[w:4]\nwill they.[w:40][next]", "Still,[w:4] reset[w:4]\nthe timeline?[w:40][func:Choice]"}
+		gameover.SetText{"The fight\n[w:4]has ended.[w:40][nextthisnow]", "You have[w:4]\nbecome god.[w:40][nextthisnow]", "Next time...[w:40][nextthisnow]", "The same[w:4]\nmight occur.[w:40][nextthisnow]", "They may[w:4]\nattack again.[w:40][nextthisnow]", "You will[w:4]\nnot remember.[w:40][nextthisnow]", "And neither[w:4]\nwill they.[w:40][nextthisnow]", "Still,[w:4] reset[w:4]\nthe timeline?[w:40][func:Choice]"}
 		gameover.x = 320 - gameover.GetTextWidth() / 2
 	end
 
@@ -51,7 +51,7 @@ function Update()
 			if Input.Confirm == 1 then
 				yes.alpha = 0
 				no.alpha = 0
-				gameover.SetText{"Of course.[w:40][next]", "Then the world[w:4]\nshall remain.[w:40][func:State, DONE]"}
+				gameover.SetText{"Of course.[w:40][nextthisnow]", "Then the world[w:4]\nshall remain.[w:40][func:State, DONE]"}
 				Audio.PlaySound("menuconfirm")
 			end
 		else
@@ -60,7 +60,7 @@ function Update()
 			if Input.Confirm == 1 then
 				yes.alpha = 0
 				no.alpha = 0
-				gameover.SetText{"How[w:4]\ninteresting.[w:40][next]", "Very well[w:4]\nthen.[w:40][next]", "[func:Buildup]The clock[w:4]\nwill turn back."}
+				gameover.SetText{"How[w:4]\ninteresting.[w:40][nextthisnow]", "Very well[w:4]\nthen.[w:40][nextthisnow]", "[func:Buildup]The clock[w:4]\nwill turn back."}
 				SetAlMightyGlobal("genoflow_skipintro", nil)
 				SetAlMightyGlobal("genoflow_soulsintroskip", nil)
 				SetAlMightyGlobal("genoflow_souls", nil)

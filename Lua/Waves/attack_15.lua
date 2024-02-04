@@ -179,7 +179,7 @@ function Update()
 				"[novoice][waitall:2][effect:none]\"I'll just come back and FIGHT you again.\"",
 				"[novoice][waitall:2][effect:none]\"The show was rigged from the start.\"",
 				"[novoice][waitall:2][effect:none]\"You never stood a chance.\"",
-				"[novoice][func:NoDef][func:State, ACTIONSELECT][next]"
+				"[novoice][func:NoDef][func:State, ACTIONSELECT][nextthisnow]"
 			}
 		end
 

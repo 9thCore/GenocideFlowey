@@ -68,7 +68,7 @@ function lib.Update()
 				"[noskip][voice:v_flowey]\"I promise I won't get in your way\"",
 				"[noskip][voice:v_flowey][effect:shake][waitall:2]\"I can help...\rI can...\rI can...\"",
 				"[noskip][voice:v_asriel][effect:shake][waitall:4]\"Please don't kill me.\"",
-				"[noskip][func:StartTutorial][next]"
+				"[noskip][func:StartTutorial][nextthisnow]"
 			}
 		end
 	end
