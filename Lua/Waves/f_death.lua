@@ -1,4 +1,3 @@
-if GetAlMightyGlobal("genoflow_souls") == true then State("DONE") return end
 easing = require "easing"
 Audio.Stop()
 NewAudio.Stop("musicbox")
@@ -28,7 +27,16 @@ gameover.y = 60
 p = CreateSprite("px", "Top")
 p.Scale(640, 480)
 p.alpha = 0
+if GetAlMightyGlobal("genoflow_souls") == true then
+	NewAudio.Stop("finale")
+end
+
 function Update()
+	if timer == 300 and GetAlMightyGlobal("genoflow_souls") == true then
+		State("DONE")
+		return
+	end
+
 	if timer > 30 and timer < 240 then
 		local t = easing.InOut(easing.InvLerp(30, 240, timer), 2)
 		local s = easing.Lerp(1, 8, t)
