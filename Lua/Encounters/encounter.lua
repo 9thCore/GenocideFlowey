@@ -18,7 +18,7 @@ wavetimer = 0
 arenasize = {155, 130}
 noscalerotationbug = true
 flee = false
-turn = 0
+turn = 14
 dead = false
 f_dead = false
 item = ""
@@ -128,8 +128,8 @@ function SetDialogue(...)
     State("ENEMYDIALOGUE")
 end
 
-function Gasp()
-    f_anim.Gasping(true)
+function GTransition(t)
+    f_anim.GTransition(t)
 end
 
 function Attack()

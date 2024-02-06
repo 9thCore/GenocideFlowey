@@ -1,6 +1,6 @@
 local lib = {}
 local easing = require "easing"
-local gasping = false
+local gt = 0
 
 lib.h1 = {}
 lib.h2 = {}
@@ -57,23 +57,21 @@ local function constructhuman(t, l, to, h, al, ar, k)
 	t.arml2.alpha = 0
 end
 
+local function transit(a, b, t)
+end
+
 local function updatehuman(t)
 
-	if not gasping then
-		t.legs.yscale = math.sin(Time.time * 0.5) * 0.05 + 1.95
-		t.torso.yscale = math.cos(Time.time * 0.5) * 0.025 + 1.975
-	else
-		local t2 = easing.InOut(math.sin((Time.time - math.pi/2) % math.pi), 8)
-		t.legs.yscale = 2 * easing.Lerp(0.95, 1, t2)
-		t.torso.yscale = 2 * easing.Lerp(0.95, 1, t2)
-	end
+	local t2 = easing.InOut(math.sin((Time.time - math.pi/2) % math.pi), 8)
+	t.legs.yscale = easing.Lerp(math.sin(Time.time * 0.5) * 0.05 + 1.95, 2 * easing.Lerp(0.95, 1, t2), gt)
+	t.torso.yscale = easing.Lerp(math.cos(Time.time * 0.5) * 0.025 + 1.975, 2 * easing.Lerp(0.95, 1, t2), gt)
 
 	t.knife.absx = t.armr.absx - 10
 	t.knife.absy = t.armr.absy - 14
 end
 
-function lib.Gasping(g)
-	gasping = g
+function lib.GTransition(g)
+	gt = g
 end
 
 function lib.Start()

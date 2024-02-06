@@ -163,7 +163,6 @@ function Update()
 			uicover.Remove()
 			front.Remove()
 			h.Remove()
-			Encounter.Call("Gasp")
 			BattleDialog{
 				"[novoice][waitall:2][effect:none]\"...\"",
 				"[novoice][waitall:2][effect:none]\"...\"",
@@ -182,6 +181,8 @@ function Update()
 				"[novoice][func:NoDef][func:State, ACTIONSELECT][nextthisnow]"
 			}
 		end
+
+		Encounter.Call("GTransition", easing.In(math.min(timer/1240, 1), 3))
 
 	end
 
