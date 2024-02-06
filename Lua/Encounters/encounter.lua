@@ -28,6 +28,8 @@ shakeshake = false
 talked = false
 fdef = 0
 
+debug = false
+
 enemies = {
     "human"
 }
@@ -210,6 +212,22 @@ function Update()
     if f_dead then
         StartWave("f_death", 99)
         f_dead = false
+    end
+
+    if debug then
+        if Input.GetKey("S") == 1 then
+            Audio.PlaySound("menuconfirm")
+            DEBUG("Enabled 'genoflow_souls'!")
+            SetAlMightyGlobal("genoflow_souls", true)
+        elseif Input.GetKey("W") == 1 then
+            Audio.PlaySound("menuconfirm")
+            DEBUG("Enabled 'genoflow_win'!")
+            SetAlMightyGlobal("genoflow_win", true)
+        elseif Input.GetKey("I") == 1 then
+            Audio.PlaySound("menuconfirm")
+            DEBUG("Enabled 'genoflow_skipintro'!")
+            SetAlMightyGlobal("genoflow_skipintro", true)
+        end
     end
 end
 
