@@ -163,23 +163,36 @@ function Update()
 			uicover.Remove()
 			front.Remove()
 			h.Remove()
-			BattleDialog{
-				"[novoice][waitall:2][effect:none]\"...\"",
-				"[novoice][waitall:2][effect:none]\"...\"",
-				"[novoice][waitall:2][effect:none]\"...\"",
-				"[novoice][waitall:2][effect:none]\"Congratulations.\"",
-				"[novoice][waitall:2][effect:none]\"Congratulations, Flowey.\"",
-				"[novoice][waitall:2][effect:none]\"You have survived until I tired myself out.\"",
-				"[novoice][waitall:2][effect:none]\"And now, I no longer have the locket.\"",
-				"[novoice][waitall:2][effect:none]\"But what now?\"",
-				"[novoice][waitall:2][effect:none]\"You should know best...\"",
-				"[novoice][waitall:2][effect:none]\"...what will happen if you kill me.\"",
-				"[novoice][waitall:2][effect:none]\"I'll just come back.\"",
-				"[novoice][waitall:2][effect:none]\"I'll just come back and FIGHT you again.\"",
-				"[novoice][waitall:2][effect:none]\"The show was rigged from the start.\"",
-				"[novoice][waitall:2][effect:none]\"You never stood a chance.\"",
-				"[novoice][func:NoDef][func:State, ACTIONSELECT][nextthisnow]"
-			}
+			if not GetAlMightyGlobal("genoflow_congratulations") then
+				BattleDialog{
+					"[novoice][waitall:2][effect:none]\"...\"",
+					"[novoice][waitall:2][effect:none]\"...\"",
+					"[novoice][waitall:2][effect:none]\"...\"",
+					"[novoice][waitall:2][effect:none]\"Congratulations.\"",
+					"[novoice][waitall:2][effect:none]\"Congratulations, Flowey.\"",
+					"[novoice][waitall:2][effect:none]\"You have survived until I tired myself out.\"",
+					"[novoice][waitall:2][effect:none]\"And now, I no longer have the locket.\"",
+					"[novoice][waitall:2][effect:none]\"But what now?\"",
+					"[novoice][waitall:2][effect:none]\"You should know best...\"",
+					"[novoice][waitall:2][effect:none]\"...what will happen if you kill me.\"",
+					"[novoice][waitall:2][effect:none]\"I'll just come back.\"",
+					"[novoice][waitall:2][effect:none]\"I'll just come back and FIGHT you again.\"",
+					"[novoice][waitall:2][effect:none]\"The show was rigged from the start.\"",
+					"[novoice][waitall:2][effect:none]\"You never stood a chance.\"",
+					"[novoice][func:NoDef][func:State, ACTIONSELECT][nextthisnow]"
+				}
+				SetAlMightyGlobal("genoflow_congratulations", true)
+			else
+				BattleDialog{
+					"[novoice][waitall:2][effect:none]\"...\"",
+					"[novoice][waitall:2][effect:none]\"Congratulations.\"",
+					"[novoice][waitall:2][effect:none]\"You have 'defeated' me again.\"",
+					"[novoice][waitall:2][effect:none]\"But you don't remember that, do you?\"",
+					"[novoice][waitall:2][effect:none]\"Go on. Have your best shot.\"",
+					"[novoice][waitall:2][effect:none]\"Just like last time.\"",
+					"[novoice][func:NoDef][func:State, ACTIONSELECT][nextthisnow]"
+				}
+			end
 		end
 
 		Encounter.Call("GTransition", easing.In(math.min(timer/1240, 1), 3))

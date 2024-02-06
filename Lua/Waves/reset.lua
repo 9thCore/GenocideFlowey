@@ -81,6 +81,7 @@ function Update()
 				SetAlMightyGlobal("genoflow_win", nil)
 				SetAlMightyGlobal("genoflow_talked1", nil)
 				SetAlMightyGlobal("genoflow_talked2", nil)
+				SetAlMightyGlobal("genoflow_congratulations", nil)
 				Audio.PlaySound("menuconfirm")
 			end
 		end
