@@ -57,9 +57,6 @@ local function constructhuman(t, l, to, h, al, ar, k)
 	t.arml2.alpha = 0
 end
 
-local function transit(a, b, t)
-end
-
 local function updatehuman(t)
 
 	local t2 = easing.InOut(math.sin((Time.time - math.pi/2) % math.pi), 8)
