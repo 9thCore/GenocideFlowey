@@ -115,10 +115,9 @@ function Update()
 			attacks.SetLocketAlpha(1)
 			attacks.locket.heart.StopAnimation()
 			attacks.locket.heart.Set("attack/heart-2")
-			front = CreateSprite("attack/heart-1")
-			front.SetParent(attacks.locket.heart)
+			front = CreateSprite("attack/heart-1", "Top")
 			front.color = attacks.locket.heart.color
-			front.MoveTo(0, 0)
+			front.MoveTo(attacks.locket.heart.absx, attacks.locket.heart.absy)
 			frontysp = 2
 			Audio.PlaySound("kaboom")
 			nexthit = 510
