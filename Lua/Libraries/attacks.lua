@@ -183,6 +183,8 @@ function lib.Update()
 			lib.UpdateLocket()
 		end
 		if lib.locket.musical then
+			lib.locket.musicaltimer = lib.locket.musicaltimer + Time.dt*lib.locket.bpm/60
+			
 			local t = lib.locket.noteinfo[lib.locket.noteidx]
 			if t <= lib.locket.musicaltimer then
 				for i = 1, lib.locket.noteper do
@@ -214,8 +216,6 @@ function lib.Update()
 					end
 				end
 			end
-
-			lib.locket.musicaltimer = lib.locket.musicaltimer + Time.dt*lib.locket.bpm/60
 		end
 	end
 
