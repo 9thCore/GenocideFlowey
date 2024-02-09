@@ -68,7 +68,8 @@ function Update()
 		if timer < 480 and timer % 60 == 59 then
 			attacks.AnticipatedSlash(Player.x, Player.y, (timer - 59) * 1.5)
 		elseif timer >= 480 and timer < 840 and timer % 15 == 0 then
-			attacks.AnticipatedSlash(0, 0, timer * 1.5)
+			attacks.AnticipatedSlash(0, 0, timer * 1.5 + switch * 180)
+			switch = 1 - switch
 		elseif timer == 840 then
 			SetStage(3)
 		end
