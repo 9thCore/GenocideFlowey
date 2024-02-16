@@ -67,6 +67,7 @@ function Update()
 				no.alpha = 0
 				gameover.SetText{"Of course.[w:40][nextthisnow]", "Then the world[w:4]\nshall remain.[w:40][func:State, DONE]"}
 				Audio.PlaySound("menuconfirm")
+				choicing = false
 			end
 		else
 			yes.color = {1, 1, 0}
@@ -83,6 +84,7 @@ function Update()
 				SetAlMightyGlobal("genoflow_talked2", nil)
 				SetAlMightyGlobal("genoflow_congratulations", nil)
 				Audio.PlaySound("menuconfirm")
+				choicing = false
 			end
 		end
 	end
