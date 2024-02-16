@@ -65,7 +65,12 @@ function Update()
 			if Input.Confirm == 1 then
 				yes.alpha = 0
 				no.alpha = 0
-				gameover.SetText{"Of course.[w:40][nextthisnow]", "Then the world[w:4]\nshall remain.[w:40][func:State, DONE]"}
+				if not GetAlMightyGlobal("genoflow_dialogue2") then
+					gameover.SetText{"Of course.[w:40][nextthisnow]", "Then the world[w:4]\nshall remain.[w:40][func:State, DONE]"}
+					SetAlMightyGlobal("genoflow_dialogue2", true)
+				else
+					gameover.SetText{"Of course.[w:40][func:State, DONE]"}
+				end
 				Audio.PlaySound("menuconfirm")
 				choicing = false
 			end
@@ -75,7 +80,12 @@ function Update()
 			if Input.Confirm == 1 then
 				yes.alpha = 0
 				no.alpha = 0
-				gameover.SetText{"How[w:4]\ninteresting.[w:40][nextthisnow]", "All of[w:4]\nyour efforts.[w:40][nextthisnow]", "You are[w:4]\ndiscarding them.[w:40][nextthisnow]", "Very well[w:4]\nthen.[w:40][nextthisnow]", "[func:Buildup]The clock[w:4]\nwill turn back."}
+				if not GetAlMightyGlobal("genoflow_dialogue3") then
+					gameover.SetText{"How[w:4]\ninteresting.[w:40][nextthisnow]", "All of[w:4]\nyour efforts.[w:40][nextthisnow]", "You are[w:4]\ndiscarding them.[w:40][nextthisnow]", "Very well[w:4]\nthen.[w:40][nextthisnow]", "[func:Buildup]The clock[w:4]\nwill turn back."}
+					SetAlMightyGlobal("genoflow_dialogue3", true)
+				else
+					gameover.SetText{"How[w:4]\ninteresting.[w:40][nextthisnow]", "You are[w:4]\ndoing it again.[w:40][nextthisnow]", "[func:Buildup]Very well[w:4]\nthen."}
+				end
 				SetAlMightyGlobal("genoflow_skipintro", nil)
 				SetAlMightyGlobal("genoflow_soulsintroskip", nil)
 				SetAlMightyGlobal("genoflow_souls", nil)
