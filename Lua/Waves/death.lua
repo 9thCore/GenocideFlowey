@@ -30,11 +30,15 @@ function Update()
 			local ioff = 0
 			local f = Misc.OpenFile("Sprites/spr/exit.png", "r")
 			local ft = f.ReadLines()
+			local logo = CreateSprite("logo", "Top")
+			logo.x = 320
+			logo.y = -87
+			table.insert(text, logo)
 			for i = 1, #ft do
 				if #ft[i] < 2 then
 					ioff = ioff + 1
 				else
-					local txt = CreateText("", {0, -5 - (i + ioff/2)*24}, 600, "Top")
+					local txt = CreateText("", {0, -175 - (i + ioff/2)*24}, 600, "Top")
 					txt.SetFont("uidialog")
 					txt.progressmode = "none"
 					txt.color = {1, 1, 1}
