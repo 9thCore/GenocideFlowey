@@ -123,10 +123,10 @@ end
 
 local function noteupdate(n)
 	n["movetime"] = n["movetime"] + lib.locket.spd
-	local t = easing.InvLerp(0, 120, n["movetime"])
 	if n["modifier"] then
-		n["ox"], n["oy"], n["tx"], n["ty"] = n["modifier"](n, n["ox"], n["oy"], n["tx"], n["ty"])
+		n["modifier"](n)
 	end
+	local t = easing.InvLerp(0, 120, n["movetime"])
 	n.MoveTo(easing.Lerp(n["ox"], n["tx"], t) + math.random() - 0.5, easing.Lerp(n["oy"], n["ty"], t) + math.random() - 0.5)
 	if n.absx + 16 < 0 or n.absx - 16 > 640 or n.absy + 16 < 0 or n.absy - 16 > 480 then
 		n["endtime"] = 0
