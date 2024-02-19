@@ -60,15 +60,15 @@ function lib.Update()
 			Arena.outerColor = {v, v, v}
 		elseif timer == 150 then
 			BattleDialog{
-				"[noskip][voice:v_flowey]\"See? I never betrayed you!\"",
-				"[noskip][voice:v_flowey]\"It was all a trick, see?\"",
-				"[noskip][voice:v_flowey]\"I was waiting to kill him for you!\"",
-				"[noskip][voice:v_flowey]\"After all it's me your best friend!\"",
-				"[noskip][voice:v_flowey]\"I'm helpful, I can be useful to you\"",
-				"[noskip][voice:v_flowey]\"I promise I won't get in your way\"",
-				"[noskip][voice:v_flowey][effect:shake][waitall:2]\"I can help...\rI can...\rI can...\"",
-				"[noskip][voice:v_asriel][effect:shake][waitall:3]\"Please don't kill me.\"",
-				"[noskip][func:StartTutorial][nextthisnow]"
+				"[voice:v_flowey]\"See? I never betrayed you!\"",
+				"[voice:v_flowey]\"It was all a trick, see?\"",
+				"[voice:v_flowey]\"I was waiting to kill him for you!\"",
+				"[voice:v_flowey]\"After all it's me your best friend!\"",
+				"[voice:v_flowey]\"I'm helpful, I can be useful to you\"",
+				"[voice:v_flowey]\"I promise I won't get in your way\"",
+				"[voice:v_flowey][effect:shake][waitall:2]\"I can help...\rI can...\rI can...\"",
+				"[voice:v_asriel][effect:shake][waitall:3]\"Please don't kill me.\"",
+				"[func:StartTutorial][nextthisnow]"
 			}
 		end
 	end
