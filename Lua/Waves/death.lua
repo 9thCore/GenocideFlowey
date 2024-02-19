@@ -8,6 +8,7 @@ truedeath = GetAlMightyGlobal("genoflow_souls") or false
 text = {}
 if truedeath then
 	cover.alpha = 0
+	Arena.ResizeImmediate(565, Arena.height)
 end
 
 function Update()
