@@ -55,6 +55,9 @@ function Update()
 		end
 
 		if timer > 372 and Input.Confirm == 1 then
+			if not f_parry.IsParrying() then
+				f_parry.StartParry()
+			end
 			fade.alpha = 0
 			z.alpha = 0
 			timer = -9999
