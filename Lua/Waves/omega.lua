@@ -55,7 +55,7 @@ local function infightbox()
 end
 
 function NewFinale()
-	finaleattack = math.random(1, 4)
+	finaleattack = math.random(1, 5)
 end
 
 function Soul(color)
@@ -420,6 +420,37 @@ function Update()
 			if time == 539 then
 				attacktime = timer + 1
 				attackvar1 = 0
+				NewFinale()
+			end
+		elseif finaleattack == 5 then
+			if time == 0 then
+				attackvar1 = 0
+				attacks.MusicalFunc(function(x, y)
+					attackvar1 = attackvar1 + 1/4
+					if math.floor(attackvar1) == attackvar1 then
+						attackvar2 = attackvar2 + 1/5
+					end
+					local r = (attackvar1 + attackvar2) * 2 * math.pi
+					return x + math.cos(r), y + math.sin(r)
+				end, 4, function(n, ox, oy, tx, ty)
+					if not n["rot"] then
+						n["rot"] = math.atan2(ty - oy, tx - ox)
+					end
+					n["rot"] = n["rot"] + math.pi/480
+					return ox, oy, ox + math.cos(n["rot"]) * 90, oy - math.sin(n["rot"]) * 90
+				end)
+			end
+
+			if timer - lastslash >= 90 then
+				attacks.AnticipatedSlash(Player.x, Player.y, lastslashrot + 90)
+				lastslash = timer
+				lastslashrot = lastslashrot + 90
+			end
+
+			if time == 480 then
+				attacktime = timer + 1
+				attackvar1 = 0
+				attackvar2 = 0
 				NewFinale()
 			end
 		end
