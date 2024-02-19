@@ -152,6 +152,10 @@ function SetLArm(spr, a, x, y)
     f_anim.h1.arml2.MoveTo(x, y)
 end
 
+function GetHP()
+    return enemies[1]["hp"]
+end
+
 function FHeal()
     local i = enemies[1].Call("Heal")
     if i ~= nil then

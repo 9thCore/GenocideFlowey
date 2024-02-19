@@ -89,6 +89,9 @@ local function vine(v)
 		if v["attack"] then
 			Player.ForceAttack(1, 15)
 			delayheal()
+			if Encounter.Call("GetHP") <= 35 then
+				Encounter.Call("SetHead", "human/head/unused8")
+			end
 		end
 	elseif v["timer"] > 15 and v["timer"] < 60 then
 		local t = easing.InvLerp(60, 45 + v["offset"], v["timer"])
