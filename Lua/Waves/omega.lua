@@ -55,7 +55,7 @@ local function infightbox()
 end
 
 function NewFinale()
-	finaleattack = math.random(1, 5)
+	finaleattack = math.random(1, 6)
 end
 
 function Soul(color)
@@ -435,12 +435,13 @@ function Update()
 					end
 					local r = (attackvar1 + attackvar2) * 2 * math.pi
 					return x + math.cos(r), y + math.sin(r)
-				end, 4, function(n, ox, oy, tx, ty)
+				end, 4, function(n)
 					if not n["rot"] then
-						n["rot"] = math.atan2(ty - oy, tx - ox)
+						n["rot"] = math.atan2(n["ty"] - n["oy"], n["tx"] - n["ox"])
 					end
-					n["rot"] = n["rot"] + math.pi/480
-					return ox, oy, ox + math.cos(n["rot"]) * 90, oy - math.sin(n["rot"]) * 90
+					n["rot"] = n["rot"] + math.pi/480*easing.InvLerp(-480, 480, timer - attacktime)
+					n["tx"] = n["ox"] + math.cos(n["rot"]) * 90
+					n["ty"] = n["oy"] - math.sin(n["rot"]) * 90
 				end)
 			end
 
@@ -454,6 +455,27 @@ function Update()
 				attacktime = timer + 1
 				attackvar1 = 0
 				attackvar2 = 0
+				NewFinale()
+			end
+		elseif finaleattack == 6 then
+			if time == 0 then
+				attacks.MusicalFunc(nil, nil, function(n)
+					if (timer - attacktime) % 60 == 0 then
+						n["movetime"] = 0
+						n["ox"], n["oy"] = n.x, n.y
+						n["tx"], n["ty"] = Player.x, Player.y
+					end
+				end)
+			end
+
+			if timer - lastslash >= 60 then
+				attacks.AnticipatedSlash(Player.x, Player.y, lastslashrot + 90)
+				lastslash = timer
+				lastslashrot = lastslashrot + 90
+			end
+
+			if time == 480 then
+				attacktime = timer + 1
 				NewFinale()
 			end
 		end
