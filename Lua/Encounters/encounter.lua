@@ -3,6 +3,7 @@ f_attacks = require "f_attacks"
 f_anim = require "f_anim"
 f_flee = require "f_flee"
 intro2 = require "intro2"
+name = require "name"
 
 NewAudio.CreateChannel("warning")
 NewAudio.CreateChannel("slash")
@@ -27,7 +28,7 @@ ppval = 0
 shakeshake = false
 talked = false
 fdef = 0
-
+naming = false
 debug = false
 
 enemies = {
@@ -63,7 +64,13 @@ function EncounterStarting()
     pp.MoveTo(492, UI.hplabel.absy)
     f_anim.Start()
 
-    if GetAlMightyGlobal("genoflow_win") == true then
+    if GetAlMightyGlobal("genoflow_name") == nil then
+        name.newMusic = "menu"
+        name.confirmSound = "buildup"
+        name.Finish = OnFinish
+        naming = true
+        name.Start()
+    elseif GetAlMightyGlobal("genoflow_win") == true then
         encountertext = "[novoice]"
         Audio.Stop()
         StartWave("reset", math.huge)
@@ -77,7 +84,21 @@ function EncounterStarting()
             encountertext = "[novoice]"
             StartWave("omega", math.huge)
         end
-    elseif GetAlMightyGlobal("genoflow_skipintro") ~= true then
+    else
+        StartFightProper()
+    end
+end
+
+function OnFinish()
+    naming = false
+    SetAlMightyGlobal("genoflow_name", name.name)
+    Audio.LoadFile("relentless_killer")
+    StartFightProper()
+end
+
+function StartFightProper()
+    enemies[1].Call("SetName", GetAlMightyGlobal("genoflow_name"))
+    if GetAlMightyGlobal("genoflow_skipintro") ~= true then
         Audio.Pause()
         intro.Start()
         pp.alpha = 0
@@ -197,6 +218,11 @@ function GetPP()
 end
 
 function Update()
+    if naming then
+        name.Update()
+        return
+    end
+
     intro.Update()
     f_attacks.Update()
     f_anim.Update()

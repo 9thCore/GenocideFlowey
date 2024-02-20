@@ -14,14 +14,7 @@ cancheck = false
 voice = "none"
 dialogueprefix = "[effect:none]"
 plead = 0
-pleads = {
-    {"[effect:none]You plead with CHARA to stop FIGHTing.", "[effect:none]...[w:4]\nBut nobody answered."},
-    {"[effect:none]You remind CHARA of your fun times together.", "[effect:none]...[w:4]\nBut nobody answered."},
-    {"[effect:none]You apologise for any grudges from back then.", "[effect:none]...[w:4]\nBut nobody answered."},
-    {"[effect:none]You tell CHARA you will help in destroying humankind.", "[effect:none]...[w:4]\nBut nobody answered."},
-    {"[effect:none]You can't think of any other topic.", "[effect:none]Seems like talking won't do any good."},
-    {"[effect:none]..."}
-}
+pleads = {}
 
 items = {
     {
@@ -61,11 +54,23 @@ items = {
 
 function HandleCustomCommand(command)
     if command == "CHECK" then
-        BattleDialog{"[effect:none]CHARA LV 20\n..."}
+        BattleDialog{"[effect:none]" .. name .. " LV 20\n..."}
     elseif command == "PLEAD" then
         plead = math.min(plead + 1, #pleads)
         BattleDialog(pleads[plead])
     end
+end
+
+function SetName(newname)
+    name = newname
+    pleads = {
+        {"[effect:none]You plead with " .. name .. " to stop FIGHTing.", "[effect:none]...[w:4]\nBut nobody answered."},
+        {"[effect:none]You remind " .. name .. " of your fun times together.", "[effect:none]...[w:4]\nBut nobody answered."},
+        {"[effect:none]You apologise for any grudges from back then.", "[effect:none]...[w:4]\nBut nobody answered."},
+        {"[effect:none]You tell " .. name .. " you will help in destroying humankind.", "[effect:none]...[w:4]\nBut nobody answered."},
+        {"[effect:none]You can't think of any other topic.", "[effect:none]Seems like talking won't do any good."},
+        {"[effect:none]..."}
+    }
 end
 
 function PauseMusic(pause)

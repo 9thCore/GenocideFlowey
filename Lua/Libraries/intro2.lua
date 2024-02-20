@@ -19,7 +19,7 @@ function lib.Update()
 	if lib.timer == 60 then
 		lib.text = CreateText({
 			"[voice:v_flowey][effect:none]Hey...",
-			"[voice:v_flowey][effect:none]You're not actually Chara,[w:2] are you?",
+			"[voice:v_flowey][effect:none]You're not actually " .. GetAlMightyGlobal("genoflow_name") .. ",[w:2] are you?",
 			"[voice:v_flowey][effect:none]No...",
 			"[voice:v_floweymad][waitall:2][effect:shake]They wouldn't have been such an IDIOT.",
 			"[voice:v_floweymad][waitall:2][effect:shake]Hee hee hee...",
