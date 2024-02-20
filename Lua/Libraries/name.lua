@@ -94,7 +94,7 @@ lib.specialNames = {
 		allowed = true
 	},
 	frisk = {
-		comment = "Hard mode will be coming...\nMaybe...\nEh, don't count on it.",
+		comment = "Easy mode will be coming...\nMaybe...\nEh, don't count on it.",
 		allowed = false
 	},
 	asgore = {
