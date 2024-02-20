@@ -54,7 +54,7 @@ items = {
 
 function HandleCustomCommand(command)
     if command == "CHECK" then
-        BattleDialog{"[effect:none]" .. name .. " LV 20\n..."}
+        BattleDialog{"[effect:none]" .. name .. " 99 ATK " .. (99 + Encounter["fdef"]) .. " DEF\n..."}
     elseif command == "PLEAD" then
         plead = math.min(plead + 1, #pleads)
         BattleDialog(pleads[plead])
