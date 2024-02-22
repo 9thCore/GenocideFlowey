@@ -47,7 +47,7 @@ function lib.Start()
 	lib.fg = CreateSprite("px", "CoverBarrierTop")
 	lib.fg.Scale(640, 480)
 	lib.fg.alpha = 0
-	lib.resettime = math.floor(easing.Lerp(60, 800, turn/15))
+	lib.resettime = math.floor(easing.Lerp(180, 800, math.min(1, turn/15)))
 end
 
 function lib.Update()
