@@ -299,7 +299,7 @@ end
 function DefenseEnding()
     encountertext = RandomEncounterText()
     if turn == 14 then
-        encountertext = "[effect:shake][voice:v_flowey]CHARA seems to be preparing for something..?"
+        encountertext = "[effect:shake][voice:v_flowey]" .. enemies[1]["name"] .. " seems to be preparing for something..?"
     elseif turn == 15 then
         encountertext = "[effect:shake, 0.5][voice:v_flowey]Now's my chance."
     end
