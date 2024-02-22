@@ -61,7 +61,9 @@ end
 function Soul(color)
 	local h = CreateSprite("ut-heart", "Top")
 	h.MoveTo(Arena.x, Arena.y)
-	h.color = color
+	h["r"] = color[1]
+	h["g"] = color[2]
+	h["b"] = color[3]
 	h.alpha = 0
 	souls[#souls+1] = h
 end
@@ -230,10 +232,21 @@ function Update()
 		for i = 1, #souls do
 			souls[i].alpha = 1
 		end
-	elseif timer <= 150 then
-		local t = easing.Out(easing.InvLerp(120, 150, timer), 3)
-		radius = easing.Lerp(0, 60, t)
-		srot = easing.Lerp(-math.pi/3, 0, t)
+	elseif timer <= 165 then
+		local t = math.min(easing.InvLerp(120, 150, timer), 1)
+		local t2 = easing.InvLerp(120, 165, timer)
+		local t3 = easing.Out(t, 3)
+		local t4 = easing.Out(t2, 3)
+		radius = easing.Lerp(0, 60, t3)
+		srot = easing.Lerp(-math.pi/3, 0, t4)
+		for i = 1, #souls do
+			local s = souls[i]
+			s.color = {
+				easing.Lerp(1, s["r"], t),
+				easing.Lerp(1, s["g"], t),
+				easing.Lerp(1, s["b"], t)
+			}
+		end
 	elseif timer == 210 then
 		NewAudio.Unpause("finale")
 		musicstage = 1
