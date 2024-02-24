@@ -7,6 +7,7 @@ timer = -10
 timing = 60
 nexthit = 860
 stage = 1
+timingdec = true
 attacks.CreateLocket()
 switch = 0
 uicover = CreateSprite("black", "BelowBullet")
@@ -154,8 +155,14 @@ function Update()
 			h.rotation = h.rotation + hy
 		elseif timer >= nexthit and timer < 1140 then
 			attacks.AnticipatedSlash(Player.x, Player.y, math.random() * 360, timing)
-			if timing > 5 then
-				timing = timing - 5
+			if timingdec then
+				if timing > 5 then
+					timing = timing - 5
+				elseif timer > 880 then
+					timingdec = false
+				end
+			else
+				timing = timing + 2
 			end
 			nexthit = timer + timing
 		elseif timer == 1240 then
@@ -205,7 +212,7 @@ end
 function OnHit(bullet)
 	if Player.ishurting then return end
 	local dmg = bullet["damage"] or 4
-	if not f_parry.IsParrying() and stage > 2 and Player.hp - dmg <= 0 then
+	if not f_parry.IsParrying() and stage > 3 and Player.hp - dmg <= 0 then
 		Player.hp = dmg+1
 	end
 	attacks.OnHit(bullet)
