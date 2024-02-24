@@ -11,7 +11,7 @@ NewAudio.CreateChannel("musicbox")
 
 autolinebreak = true
 music = "relentless_killer"
-startencountertext = "[effect:none]Parry white attacks with [Z]!"
+startencountertext = "[effect:none]Parry white attacks with [Confirm]!"
 encountertext = startencountertext
 playerskipdocommand = true
 nextwaves = {}

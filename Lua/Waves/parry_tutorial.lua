@@ -18,6 +18,12 @@ playermimic.alpha = 0
 local z = CreateSprite("attack/Z", "Top")
 z.MoveTo(400, 150)
 z.alpha = 0
+local probablyz = CreateText("[instant][font:uidialog][effect:none](probably Z)", {0, 110}, 640, "Top")
+probablyz.Scale(1/2, 1/2)
+probablyz.x = 400 - probablyz.GetTextWidth()/4
+probablyz.progressmode = "none"
+probablyz.color = {1/2, 1/2, 1/2, 0}
+probablyz.HideBubble()
 
 f_parry.SetActive(false)
 
@@ -50,6 +56,8 @@ function Update()
 			shakemult = 0
 			playermimic.MoveTo(Player.absx, Player.absy)
 			f_parry.SetActive(true)
+		elseif timer > 612 then
+			probablyz.alpha = probablyz.alpha + 1/60
 		elseif timer > 492 then
 			z.alpha = z.alpha + 1/60
 		end
@@ -60,6 +68,7 @@ function Update()
 			end
 			fade.alpha = 0
 			z.alpha = 0
+			probablyz.alpha = 0
 			timer = -9999
 			Time.timeScale = 1
 			NewAudio.Unpause("slash")
@@ -68,7 +77,7 @@ function Update()
 			timer = 0
 		end
 
-		z.xscale = 2 + math.sin(timer/60 * math.pi) * 0.5
+		z.xscale = 0.75 + math.sin(timer/60 * math.pi) * 0.25
 		z.yscale = z.xscale
 	else
 		if timer == 120 then
@@ -83,6 +92,8 @@ function EndingWave()
 	attacks.EndingWave()
 	fade.Remove()
 	fakeplayer.Remove()
+	z.Remove()
+	probablyz.Remove()
 end
 
 function OnHit(bullet)
