@@ -89,6 +89,7 @@ function lib.Update()
 	elseif lib.timer > 480 + 5.19 * 60 then
 		SetAlMightyGlobal("genoflow_souls", true)
 		State("DONE")
+		CopyImage("preview4", "preview")
 	end
 
 	if lib.timer < 300 then

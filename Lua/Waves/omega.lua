@@ -187,6 +187,7 @@ function Update()
 		if Encounter.Call("IsDead") then
 			EndWave()
 			Encounter.Call("StartWave", {"death", math.huge})
+			Encounter.Call("CopyImage", {"preview2", "preview"})
 			return
 		end
 		Encounter["item"], Encounter["itemheal"] = Encounter.Call("FHeal")

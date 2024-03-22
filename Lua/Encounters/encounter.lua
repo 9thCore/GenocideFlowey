@@ -65,6 +65,7 @@ function EncounterStarting()
     f_anim.Start()
 
     if GetAlMightyGlobal("genoflow_name") == nil then
+        CopyImage("preview3", "preview")
         name.newMusic = "menu"
         name.confirmSound = "buildup"
         name.Finish = OnFinish
@@ -105,6 +106,13 @@ function StartFightProper()
         ppbar.background.x = ppbar.background.x + 300
     else
         shakeshake = true
+    end
+end
+
+function CopyImage(src, dest)
+    local status, result = pcall(Misc.OpenFile, "Sprites/" .. src .. ".png", "r")
+    if status then
+        Misc.OpenFile("Sprites/" .. dest .. ".png", "w").WriteBytes(result.ReadBytes())
     end
 end
 

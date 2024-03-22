@@ -95,6 +95,7 @@ function Update()
 				SetAlMightyGlobal("genoflow_congratulations", nil)
 				SetAlMightyGlobal("genoflow_name", nil)
 				Audio.PlaySound("menuconfirm")
+				Encounter.Call("CopyImage", {"preview3", "preview"})
 				choicing = false
 			end
 		end
