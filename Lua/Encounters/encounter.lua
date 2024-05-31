@@ -326,9 +326,9 @@ function EnteringState(newstate, oldstate)
         else
             local diff = math.min(ppval, Player.maxhp - Player.hp)
             if diff == 0 then
-                BattleDialogue{"[effect:none]You tried creating green pellets.", "[effect:none]...But you did not need any healing."}
+                BattleDialogue{"[effect:none]But you did not need any healing.", "[effect:none]...Your turn was still used, though!"}
             else
-                BattleDialogue{"[effect:none]You tried creating green pellets.", "[func:TurnHeal, " .. diff .. "][effect:none]Healed " .. diff .. " HP!"}
+                BattleDialogue{"[effect:none]You created and consumed some green pellets.", "[effect:none]Yum!\n[w:10][func:TurnHeal, " .. diff .. "]Healed " .. diff .. " HP!"}
                 AddPP(-diff)
             end
         end
