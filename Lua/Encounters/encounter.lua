@@ -69,6 +69,8 @@ function EncounterStarting()
         name.newMusic = "menu"
         name.confirmSound = "buildup"
         name.Finish = OnFinish
+        name.maxNameLength = 6
+        name.specialNames["aaaaaa"] = name.specialNames["aaaaaaaaa"]
         naming = true
         name.Start()
     elseif GetAlMightyGlobal("genoflow_win") == true then
