@@ -59,7 +59,7 @@ end
 
 local function updatehuman(t)
 
-	local t2 = easing.InOut(math.sin((Time.time - math.pi/2) % math.pi), 8)
+	local t2 = 1 - easing.InOut(math.sin((Time.time - math.pi/2) % math.pi), 8)
 	t.legs.yscale = easing.Lerp(math.sin(Time.time * 0.5) * 0.05 + 1.95, 2 * easing.Lerp(0.95, 1, t2), gt)
 	t.torso.yscale = easing.Lerp(math.cos(Time.time * 0.5) * 0.025 + 1.975, 2 * easing.Lerp(0.95, 1, t2), gt)
 
