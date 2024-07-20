@@ -271,16 +271,53 @@ function Update()
     end
 end
 
+local turnDialogue = {
+    [8] = {
+        max = 10,
+        {"[effect:shake][voice:v_flowey]{ENEMYNAME} seems a bit irritated?"}, -- 1
+        {"[effect:shake][voice:v_flowey]Did {ENEMYNAME} chuckle..?"}, -- 2
+        nil, -- 3
+        {random = true, {"[effect:shake][voice:v_flowey]What's so funny?"}, {"[effect:shake][voice:v_flowey]Why are you laughing?"}}, -- 4
+        nil, -- 5
+        nil, -- 6
+        nil, -- 7
+        {random = true, {"[effect:shake][voice:v_flowey]It's not funny."}, {"[effect:shake][voice:v_flowey]I don't get it."}}, -- 8
+        nil, -- 9
+        nil, -- 10
+    },
+    [12] = {
+        max = 9,
+        {"[effect:shake][voice:v_flowey]{ENEMYNAME} is holding the knife steady."},
+        nil,
+        {random = true, {"[effect:shake][voice:v_flowey]{ENEMYNAME}'s breath got funny for a moment."}, {"[effect:shake][voice:v_flowey]{ENEMYNAME} has trouble breathing."}, {"[effect:shake][voice:v_flowey]{ENEMYNAME} held their breath for a few seconds."}},
+        {"[effect:shake][voice:v_flowey]{ENEMYNAME} looked here."},
+        nil,
+        nil,
+        {"[effect:shake][voice:v_flowey]{ENEMYNAME} looked past me."},
+        nil,
+        {"[effect:shake][voice:v_flowey]{ENEMYNAME} looked away."}
+    }
+}
+
 function EnemyDialogueStarting()
     if talked then return end
-    if turn == 8 and not GetAlMightyGlobal("genoflow_talked1") then
-        BattleDialogue{"[novoice][effect:none]\"Why won't you die already?\""}
-        talked = true
-        SetAlMightyGlobal("genoflow_talked1", true)
-    elseif turn == 12 and not GetAlMightyGlobal("genoflow_talked2") then
-        BattleDialogue{"[novoice][effect:none]\"[color:ff0000][lettereffect:shake]Why[w:4][lettereffect:none][color:ffffff] won't you die already?\""}
-        talked = true
-        SetAlMightyGlobal("genoflow_talked2", true)
+    local maxidx = GetAlMightyGlobal("genoflow_talked" .. turn) or 1
+    if turnDialogue[turn] then
+        maxidx = (maxidx - 1) % turnDialogue[turn].max + 1
+        local idx = math.random(1, maxidx)
+        SetAlMightyGlobal("genoflow_talked" .. turn, maxidx+1)
+        if turnDialogue[turn][idx] then
+            local ogtext = turnDialogue[turn][idx]
+            if ogtext.random then
+                ogtext = ogtext[math.random(1, #ogtext)]
+            end
+            local newtext = {}
+            for i = 1, #ogtext do
+                newtext[i] = ogtext[i]:gsub("{ENEMYNAME}", enemies[1]["name"])
+            end
+            BattleDialogue(newtext)
+            talked = true
+        end
     end
 end
 
