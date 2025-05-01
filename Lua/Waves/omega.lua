@@ -47,6 +47,15 @@ mask.y = Arena.y + Arena.height/2 + 5
 mask.Scale(565, Arena.height + 0.5)
 attacks.CreateLocket()
 
+hitters = {10, 20, 15, 15, 15, 15, 15, 15, 15, 15}
+box = {}
+
+local function copyhitters()
+	for _, h in ipairs(hitters) do
+		table.insert(box, h);
+	end
+end
+
 local function infightbox()
 	return  Player.x + 8 >= -UI.fightbtn.width/2
 		and Player.x - 8 <= UI.fightbtn.width/2
@@ -89,7 +98,12 @@ local function vine(v)
 		v.MoveTo(320 - math.cos(rr) * r, 290 - math.sin(rr) * r)
 	elseif v["timer"] == 15 then
 		if v["attack"] then
-			Player.ForceAttack(1, 15)
+			if (#box == 0) then
+				copyhitters();
+			end
+			local j = math.random(1, #box);
+			Player.ForceAttack(1, box[j]);
+			table.remove(box, j);
 			delayheal()
 			if Encounter.Call("GetHP") <= 35 then
 				Encounter.Call("SetHead", "human/head/unused8")
