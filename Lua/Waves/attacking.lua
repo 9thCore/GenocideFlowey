@@ -93,13 +93,13 @@ function Update()
 			local diff = math.abs(320 - target.x)
 			local t = invlerp(320, 0, diff)
 			local dmg = math.floor(t*t*t*(2+math.floor(perfects*0.5)) + 0.5) - Encounter["fdef"]
-			Encounter.Call("AddPP", math.floor(dmg / 2));
 
 			if diff <= 20 then
 				Audio.PlaySound("hit2")
 				SpawnVine(dmg)
 				SpawnMimic{1, 1, 0}
 				perfects = perfects + 1
+			Encounter.Call("AddPP", math.floor(dmg / 2));
 			elseif diff > 100 then
 				Audio.PlaySound("guh")
 				stoptime = timer
@@ -108,6 +108,7 @@ function Update()
 				Audio.PlaySound("hit1")
 				SpawnVine(dmg)
 				SpawnMimic{1, 1, 1}
+			Encounter.Call("AddPP", math.floor(dmg / 2));
 			end
 
 			target.color = {0.5, 0.5, 0.5}
