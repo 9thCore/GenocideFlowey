@@ -93,6 +93,7 @@ function Update()
 			local diff = math.abs(320 - target.x)
 			local t = invlerp(320, 0, diff)
 			local dmg = math.floor(t*t*t*(2+math.floor(perfects*0.5)) + 0.5) - Encounter["fdef"]
+			Encounter.Call("AddPP", math.floor(dmg / 2));
 
 			if diff <= 20 then
 				Audio.PlaySound("hit2")
