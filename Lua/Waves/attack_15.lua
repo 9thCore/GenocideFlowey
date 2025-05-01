@@ -215,7 +215,6 @@ function Update()
 					"[novoice][waitall:2][effect:none]\"Each iteration, you seem more tired than the last.\"",
 					"[novoice][waitall:2][effect:none]\"Do you remember your past attempts?\"",
 					"[novoice][waitall:2][effect:none]\"Well, until you've figured out the answer...\"",
-					"[func:SetHead, human/head/unused0][novoice][waitall:2][effect:none]\"...I'll be here, to keep playing with you.\"",
 					"[func:SetHead, human/head/unused][novoice][func:NoDef][func:State, ACTIONSELECT][nextthisnow]"
 				}
 			elseif value == 49 then
@@ -231,7 +230,8 @@ function Update()
 					"[novoice][waitall:2][effect:none]\"But you don't remember that, do you?\"",
 					"[novoice][waitall:2][effect:none]\"Go on. Give it your best shot.\"",
 					"[novoice][waitall:2][effect:none]\"Just like last time.\"",
-					"[novoice][func:NoDef][func:State, ACTIONSELECT][nextthisnow]"
+					"[func:SetHead, human/head/unused0][novoice][waitall:2][effect:none]\"Let's play again next time.\"",
+					"[func:SetHead, human/head/unused][novoice][func:NoDef][func:State, ACTIONSELECT][nextthisnow]"
 				}
 			end
 			
