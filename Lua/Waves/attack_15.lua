@@ -170,36 +170,72 @@ function Update()
 			uicover.Remove()
 			front.Remove()
 			h.Remove()
-			if not GetAlMightyGlobal("genoflow_congratulations") then
+			local value = GetAlMightyGlobal("genoflow_congratulations");
+
+			if value == true then
+				value = 1;
+			elseif type(value) ~= "number" then
+				value = 0;
+			end
+
+			if value == 0 then
 				BattleDialog{
 					"[novoice][waitall:2][effect:none]\"...\"",
 					"[novoice][waitall:2][effect:none]\"...\"",
 					"[novoice][waitall:2][effect:none]\"...\"",
 					"[novoice][waitall:2][effect:none]\"Congratulations.\"",
-					"[novoice][waitall:2][effect:none]\"Congratulations, Flowey.\"",
-					"[novoice][waitall:2][effect:none]\"You have survived until I tired myself out.\"",
-					"[novoice][waitall:2][effect:none]\"And now, I no longer have the locket.\"",
-					"[novoice][waitall:2][effect:none]\"But what now?\"",
+					"[func:SetHead, human/head/unused0][novoice][waitall:2][effect:none]\"Congratulations, Flowey.\"",
+					"[novoice][waitall:2][effect:none]\"You're good at dodging.\"",
+					"[novoice][waitall:2][effect:none]\"And the locket...\"",
+					"[novoice][waitall:2][effect:none]\"...is no longer in any usable state.\"",
+					"[novoice][waitall:2][effect:none]\"I have no more protection.\"",
+					"[func:SetHead, human/head/unused][novoice][waitall:2][effect:none]\"But what now?\"",
 					"[novoice][waitall:2][effect:none]\"You should know best...\"",
 					"[novoice][waitall:2][effect:none]\"...what will happen if you kill me.\"",
 					"[novoice][waitall:2][effect:none]\"I'll just come back.\"",
 					"[novoice][waitall:2][effect:none]\"I'll just come back and FIGHT you again.\"",
 					"[novoice][waitall:2][effect:none]\"The show was rigged from the start.\"",
+					"[novoice][waitall:2][effect:none]\"Your choices never mattered.\"",
 					"[novoice][waitall:2][effect:none]\"You never stood a chance.\"",
 					"[novoice][func:NoDef][func:State, ACTIONSELECT][nextthisnow]"
 				}
-				SetAlMightyGlobal("genoflow_congratulations", true)
+			elseif value == 5 then
+				BattleDialog{
+					"[novoice][waitall:2][effect:none]\"Five times.\"",
+					"[novoice][waitall:2][effect:none]\"Five times you have reached this point.\"",
+					"[novoice][waitall:2][effect:none]\"But, like always, it felt like your first.\"",
+					"[novoice][waitall:2][effect:none]\"Four times, you could only think of one thing.\"",
+					"[novoice][waitall:2][effect:none]\"I wonder, will it be the same now too?\"",
+					"[novoice][func:NoDef][func:State, ACTIONSELECT][nextthisnow]"
+				}
+			elseif value == 10 then
+				BattleDialog{
+					"[novoice][waitall:2][effect:none]\"Ten times.\"",
+					"[novoice][waitall:2][effect:none]\"You've really got it in you.\"",
+					"[novoice][waitall:2][effect:none]\"Each iteration, you seem more tired than the last.\"",
+					"[novoice][waitall:2][effect:none]\"Do you remember your past attempts?\"",
+					"[novoice][waitall:2][effect:none]\"Well, until you've figured out the answer...\"",
+					"[func:SetHead, human/head/unused0][novoice][waitall:2][effect:none]\"...I'll be here, to keep playing with you.\"",
+					"[func:SetHead, human/head/unused][novoice][func:NoDef][func:State, ACTIONSELECT][nextthisnow]"
+				}
+			elseif value == 50 then
+				BattleDialog{
+					"[waitall:2]Don't you have anything better to do?",
+					"[novoice][func:NoDef][func:State, ACTIONSELECT][nextthisnow]"
+				}
 			else
 				BattleDialog{
 					"[novoice][waitall:2][effect:none]\"...\"",
 					"[novoice][waitall:2][effect:none]\"Congratulations.\"",
 					"[novoice][waitall:2][effect:none]\"You have 'defeated' me again.\"",
 					"[novoice][waitall:2][effect:none]\"But you don't remember that, do you?\"",
-					"[novoice][waitall:2][effect:none]\"Go on. Have your best shot.\"",
+					"[novoice][waitall:2][effect:none]\"Go on. Give it your best shot.\"",
 					"[novoice][waitall:2][effect:none]\"Just like last time.\"",
 					"[novoice][func:NoDef][func:State, ACTIONSELECT][nextthisnow]"
 				}
 			end
+			
+			SetAlMightyGlobal("genoflow_congratulations", value + 1)
 		end
 
 		Encounter.Call("GTransition", easing.In(math.min(timer/1240, 1), 3))
