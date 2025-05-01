@@ -199,7 +199,7 @@ function Update()
 					"[novoice][waitall:2][effect:none]\"You never stood a chance.\"",
 					"[novoice][func:NoDef][func:State, ACTIONSELECT][nextthisnow]"
 				}
-			elseif value == 5 then
+			elseif value == 4 then
 				BattleDialog{
 					"[novoice][waitall:2][effect:none]\"Five times.\"",
 					"[novoice][waitall:2][effect:none]\"Five times you have reached this point.\"",
@@ -208,7 +208,7 @@ function Update()
 					"[novoice][waitall:2][effect:none]\"I wonder, will it be the same now too?\"",
 					"[novoice][func:NoDef][func:State, ACTIONSELECT][nextthisnow]"
 				}
-			elseif value == 10 then
+			elseif value == 9 then
 				BattleDialog{
 					"[novoice][waitall:2][effect:none]\"Ten times.\"",
 					"[novoice][waitall:2][effect:none]\"You've really got it in you.\"",
@@ -218,7 +218,7 @@ function Update()
 					"[func:SetHead, human/head/unused0][novoice][waitall:2][effect:none]\"...I'll be here, to keep playing with you.\"",
 					"[func:SetHead, human/head/unused][novoice][func:NoDef][func:State, ACTIONSELECT][nextthisnow]"
 				}
-			elseif value == 50 then
+			elseif value == 49 then
 				BattleDialog{
 					"[effect:none]Don't you have anything better to do?",
 					"[novoice][func:NoDef][func:State, ACTIONSELECT][nextthisnow]"
