@@ -361,7 +361,9 @@ function EnteringState(newstate, oldstate)
     if newstate == "ATTACKING" then
         Attack()
     elseif newstate == "ITEMMENU" then
-        if ppval == 0 then
+        if turn >= 15 then
+            BattleDialogue{"[effect:none]It may be best not to waste your time here."}
+        elseif ppval == 0 then
             BattleDialogue{"[effect:none]You tried creating green pellets.", "[effect:none]...But you did not have any PARRY POINTS."}
         else
             heal_value = ppval;
