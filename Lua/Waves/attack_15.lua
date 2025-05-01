@@ -220,7 +220,7 @@ function Update()
 				}
 			elseif value == 50 then
 				BattleDialog{
-					"[waitall:2]Don't you have anything better to do?",
+					"[effect:none]Don't you have anything better to do?",
 					"[novoice][func:NoDef][func:State, ACTIONSELECT][nextthisnow]"
 				}
 			else
