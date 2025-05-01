@@ -11,7 +11,7 @@ NewAudio.CreateChannel("musicbox")
 
 autolinebreak = true
 music = "relentless_killer"
-startencountertext = "[effect:none]Parry white attacks with [Confirm]!"
+startencountertext = "[effect:none]Parry [color:FFFF00]white[color:FFFFFF] attacks with [Confirm]!"
 encountertext = startencountertext
 playerskipdocommand = true
 nextwaves = {}
@@ -274,8 +274,8 @@ end
 local turnDialogue = {
     [8] = {
         max = 10,
-        {"[effect:shake][voice:v_flowey]{ENEMYNAME} seems a bit irritated?"}, -- 1
-        {"[effect:shake][voice:v_flowey]Did {ENEMYNAME} chuckle..?"}, -- 2
+        {"[effect:shake][voice:v_flowey]A smile flashed for a moment."}, -- 1
+        {"[effect:shake][voice:v_flowey]A faint chuckle was heard."}, -- 2
         nil, -- 3
         {random = true, {"[effect:shake][voice:v_flowey]What's so funny?"}, {"[effect:shake][voice:v_flowey]Why are you laughing?"}}, -- 4
         nil, -- 5
@@ -287,7 +287,7 @@ local turnDialogue = {
     },
     [12] = {
         max = 9,
-        {"[effect:shake][voice:v_flowey]{ENEMYNAME} is holding the knife steady."},
+        {"[effect:shake][voice:v_flowey]Their grip has tightened."},
         nil,
         {random = true, {"[effect:shake][voice:v_flowey]{ENEMYNAME}'s breath got funny for a moment."}, {"[effect:shake][voice:v_flowey]{ENEMYNAME} has trouble breathing."}, {"[effect:shake][voice:v_flowey]{ENEMYNAME} held their breath for a few seconds."}},
         {"[effect:shake][voice:v_flowey]{ENEMYNAME} looked here."},
@@ -346,7 +346,7 @@ end
 function DefenseEnding()
     encountertext = RandomEncounterText()
     if turn == 14 then
-        encountertext = "[effect:shake][voice:v_flowey]" .. enemies[1]["name"] .. " seems to be preparing for something..?"
+        encountertext = "[effect:shake][voice:v_flowey]" .. enemies[1]["name"] .. " looks unusually ecstatic..."
     elseif turn == 15 then
         encountertext = "[effect:shake, 0.5][voice:v_flowey]Now's my chance."
     end
