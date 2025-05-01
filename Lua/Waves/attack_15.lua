@@ -229,8 +229,7 @@ function Update()
 					"[novoice][waitall:2][effect:none]\"You have 'defeated' me again.\"",
 					"[novoice][waitall:2][effect:none]\"But you don't remember that, do you?\"",
 					"[novoice][waitall:2][effect:none]\"Go on. Give it your best shot.\"",
-					"[novoice][waitall:2][effect:none]\"Just like last time.\"",
-					"[func:SetHead, human/head/unused0][novoice][waitall:2][effect:none]\"Let's play again next time.\"",
+					"[func:SetHead, human/head/unused0][novoice][waitall:2][effect:none]\"And let's play again next time.\"",
 					"[func:SetHead, human/head/unused][novoice][func:NoDef][func:State, ACTIONSELECT][nextthisnow]"
 				}
 			end
